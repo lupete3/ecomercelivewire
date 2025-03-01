@@ -98,7 +98,7 @@
                     <h3 class="section-title mb-20"><span>Catégories</span> Populaires</h3>
                     <div class="firsthomecontent">
                        @foreach ($categories as $category)
-                            <a href="http://">
+                            <a href="{{ route('product.category', ['slug' => $category->slug]) }}">
                                 <div class="homecontent">
                                     <img class="lazyloaded" src="{{ $category->image }}" alt="" srcset="">
                                     <p>{{ $category->name }}</p>
@@ -115,21 +115,22 @@
                 <div class="tab-header">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Featured</button>
+                            <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">En vedette</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="nav-tab-two" data-bs-toggle="tab" data-bs-target="#tab-two" type="button" role="tab" aria-controls="tab-two" aria-selected="false">Popular</button>
+                            <button class="nav-link" id="nav-tab-two" data-bs-toggle="tab" data-bs-target="#tab-two" type="button" role="tab" aria-controls="tab-two" aria-selected="false">Populaires</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="nav-tab-three" data-bs-toggle="tab" data-bs-target="#tab-three" type="button" role="tab" aria-controls="tab-three" aria-selected="false">New added</button>
+                            <button class="nav-link" id="nav-tab-three" data-bs-toggle="tab" data-bs-target="#tab-three" type="button" role="tab" aria-controls="tab-three" aria-selected="false">Nouveaux</button>
                         </li>
                     </ul>
-                    <a href="#" class="view-more d-none d-md-flex">View More<i class="fi-rs-angle-double-small-right"></i></a>
+                    <a href="#" class="view-more d-none d-md-flex">Voir plus<i class="fi-rs-angle-double-small-right"></i></a>
                 </div>
                 <!--End nav-tabs-->
                 <div class="tab-content wow fadeIn animated" id="myTabContent">
                     <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
                         <div class="row product-grid-4">
+
                             @forelse ($products as $product)
 
                                 <div class="col-lg-3 col-md-3 col-6 col-sm-6 g-2">
@@ -160,7 +161,7 @@
                                                 <span class="old-price">${{ $product->regular_price }}</span>
                                             </div>
                                             <div class="product-action-1 show">
-                                                <a aria-label="Ajouter au panier" class="action-btn hover-up" wire:click.prevent="addToCart('{{$product->id}}','{{ addslashes($product->name) }}', 1, {{ $product->sale_price }})"><i class="fi-rs-shopping-bag-add"></i></a>
+                                                <a aria-label="Ajouter au panier" class="action-btn hover-up" wire:click.prevent='polo()'><i class="fi-rs-shopping-bag-add"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -852,9 +853,9 @@
 
                             <div class="card-1">
                                 <figure class=" img-hover-scale overflow-hidden">
-                                    <a href="shop.html"><img src="{{ $popularycategory->image }}" alt=""></a>
+                                    <a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}"><img src="{{ $popularycategory->image }}" alt=""></a>
                                 </figure>
-                                <h5><a href="shop.html">{{ $popularycategory->name }}</a></h5>
+                                <h5><a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}">{{ $popularycategory->name }}</a></h5>
                             </div>
 
                         @endforeach
