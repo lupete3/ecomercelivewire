@@ -124,13 +124,13 @@
         <section class="mt-50 mb-50">
             <div class="container">
                 <form method="post" wire:submit.prevent='placeOrder'>
-
+                @method('POST')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-25 d-flex justify-content-between">
                             <h4>Adresse de livraison</h4>
                             {{-- <button class="btn btn-fill-out btn-block btn-sm " data-bs-toggle="modal" data-bs-target="#quickViewModal">Ajouter une adresse</button> --}}
-                            <button class="btn btn-fill-out btn-block btn-sm " wire:click.prevent='showAddShippingModal'>Ajouter une adresse</button>
+                            <button class="btn btn-fill-out btn-block btn-sm btn-warning" wire:click='showAddShippingModal'>Ajouter une adresse</button>
                         </div>
 
                         <div class="row mb-20">
@@ -208,7 +208,15 @@
                                             <tr>
                                                 <td class="image product-thumbnail"><img src="{{ $product->model->image }}" alt="#"></td>
                                                 <td>
-                                                    <h5><a href="product-details.html">{{ $product->model->name }}</a></h5> <span class="product-qty">x {{ $product->qty }}</span>
+                                                    <h5><a href="product-details.html">{{ $product->model->name }}</a> <span class="product-qty">x {{ $product->qty }}</span></h5>
+                                                    <div>
+                                                        @if ($product->options->color)
+                                                        <span class="text-muted">Couleur : {{ ucwords($product->options->color) }}</span>
+                                                        @endif
+                                                        @if ($product->options->size)
+                                                        <span class="text-muted">Taille : {{ $product->options->size }}</span>
+                                                        @endif
+                                                    </div>
                                                 </td>
                                                 <td>${{ $product->model->sale_price }}</td>
                                             </tr>

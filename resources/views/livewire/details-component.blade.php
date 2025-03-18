@@ -68,7 +68,17 @@
                                             <div class="product-price primary-color float-left">
                                                 <ins><span class="text-brand">${{ $product->sale_price }}</span></ins>
                                                 <ins><span class="old-price font-md ml-15">${{ $product->regular_price }}</span></ins>
-                                                <span class="save-price  font-md color3 ml-15">25% Off</span>
+                                                @php
+                                                    $reduction = $product->regular_price - $product->sale_price;
+
+                                                    if ($reduction > 0) {
+                                                        $pourcent = ($reduction / $product->regular_price) * 100;
+                                                    }else{
+                                                        $pourcent = 0;
+                                                    }
+
+                                                @endphp
+                                                <span class="save-price  font-md color3 ml-15">{{ number_format($pourcent, 0) }}% de Réduction</span>
                                             </div>
                                         </div>
                                         <div class="bt-1 border-color-1 mt-15 mb-15"></div>
@@ -107,12 +117,13 @@
                                             <div class="detail-qty border radius">
                                                 <a href="#" class="qty-down" wire:click='decrement'><i class="fi-rs-angle-small-down"></i></a>
                                                 <span class="qty-val">{{ $quantityProduct }}</span>
-                                                <a href="#" class="qty-up" wire:click='increment'><i class="fi-rs-angle-small-up"></i></a>
+                                                <a href="#" class="qty-up" wire:click='increment({{ $product->quantity }})'><i class="fi-rs-angle-small-up"></i></a>
                                             </div>
                                             <div class="product-extra-link2">
                                                 <button type="submit" class="button button-add-to-cart"
-                                                    wire:click.prevent="addToCart('{{$product->id}}','{{ addslashes($product->name) }}', {{ $product->sale_price }})">
-                                                    Ajouter au panier</button>
+                                                    wire:click.prevent="addToCart('{{$product->id}}','{{ addslashes($product->name) }}', {{ $product->sale_price }})"
+                                                    {{ $product->quantity == 0 ? 'disabled' : '' }}>
+                                                    {{ $product->quantity == 0 ? 'Rupture de stock' : 'Ajouter au panier' }}</button>
 
                                                 @php
                                                     $item = Cart::instance('wishlist')->content()->pluck('id');
@@ -133,7 +144,7 @@
                                         <ul class="product-meta font-xs color-grey mt-50">
                                             <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
                                             <li class="mb-5">Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">Women</a>, <a href="#" rel="tag">Dress</a> </li>
-                                            <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li>
+                                            <li>Disponible:<span class="in-stock text-success ml-5">{{ $product->quantity }} Produits En Stock</span></li>
                                         </ul>
                                     </div>
                                     <!-- Detail Info -->
@@ -415,6 +426,22 @@
                                                                 <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
                                                             </a>
                                                         </div>
+                                                        <div class="product-action-1">
+                                                            <a aria-label="Apperçu Rapide" wire:click.prevent='showProductQuickViewModal({{ $relatedProduct->id }})' class="action-btn small hover-up"><i class="fi-rs-search"></i></a>
+                                                            @php
+                                                                $item = Cart::instance('wishlist')->content()->pluck('id');
+                                                            @endphp
+                                                            @if ($item->contains($relatedProduct->id))
+
+                                                                <a aria-label="Rétirer aux favoris" class="action-btn hover-up" wire:click.prevent="deleteToWishlist({{ $relatedProduct->id }})">
+                                                                    <i class="fi-rs-heart"></i></a>
+
+                                                                @else
+
+                                                                    <a aria-label="Ajouter aux favoris" class="action-btn hover-up" wire:click.prevent="addToWishlist('{{ $relatedProduct->id }}','{{ addslashes($relatedProduct->name) }}', {{ $relatedProduct->sale_price }})">
+                                                                        <i class="fi-rs-heart"></i></a>
+                                                            @endif
+                                                        </div>
                                                         <div class="product-badges product-badges-position product-badges-mrg">
                                                             <span class="hot">Hot</span>
                                                         </div>
@@ -521,5 +548,149 @@
                 </div>
             </div>
         </section>
+
+        <!-- Quick view -->
+    <div class="modal fade custom-modal" wire:ignore.self id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close" wire:click.prevent='resentQuantity' data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="detail-gallery">
+                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                <!-- MAIN SLIDES -->
+                                <div class="product-image-slider">
+                                    <figure class="border-radius-10">
+                                        <img src="{{ asset('/'.$productImagesView) }}" alt="product image">
+                                    </figure>
+                                </div>
+                            </div>
+                            <!-- End Gallery -->
+                            <div class="social-icons single-share">
+                                <ul class="text-grey-5 d-inline-block">
+                                    <li><strong class="mr-10">Share this:</strong></li>
+                                    <li class="social-facebook"><a href="#"><img src="{{ asset('/') }}assets/imgs/theme/icons/icon-facebook.svg" alt=""></a></li>
+                                    <li class="social-twitter"> <a href="#"><img src="{{ asset('/') }}assets/imgs/theme/icons/icon-twitter.svg" alt=""></a></li>
+                                    <li class="social-instagram"><a href="#"><img src="{{ asset('/') }}assets/imgs/theme/icons/icon-instagram.svg" alt=""></a></li>
+                                    <li class="social-linkedin"><a href="#"><img src="{{ asset('/') }}assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="detail-info">
+                                <h3 class="title-detail mt-30">{{ $productName }}</h3>
+                                <div class="product-detail-rating">
+                                    <div class="pro-details-brand">
+                                        <span> Brands: <a href="shop.html">Bootstrap</a></span>
+                                    </div>
+                                    <div class="product-rate-cover text-end">
+                                        <div class="product-rate d-inline-block">
+                                            <div class="product-rating" style="width:90%">
+                                            </div>
+                                        </div>
+                                        <span class="font-small ml-5 text-muted"> (25 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="clearfix product-price-cover">
+                                    <div class="product-price primary-color float-left">
+                                        <ins><span class="text-brand">${{ $productSalePrice }}</span></ins>
+                                        <ins><span class="old-price font-md ml-15">${{ $productRegularPrice }}</span></ins>
+                                        @php
+                                            $reduction = $productRegularPrice - $productSalePrice;
+
+                                            if ($reduction > 0) {
+                                                $pourcent = ($reduction / $productRegularPrice) * 100;
+                                            }else{
+                                                $pourcent = 0;
+                                            }
+
+                                        @endphp
+                                        <span class="save-price  font-md color3 ml-15">{{ number_format($pourcent, 0) }}% de Réduction</span>
+                                    </div>
+                                </div>
+                                <div class="bt-1 border-color-1 mt-15 mb-15"></div>
+                                <div class="short-desc mb-30">
+                                    <p class="font-sm">{{ $productShortDescription }}</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="">Taille</label>
+                                        <select name="" id="" wire:model='productQuickSize'>
+                                            <option value="">Choisir une taille</option>
+                                            @forelse ($productSizeView as $sizeView)
+                                                <option value="{{ $sizeView }}">{{ $sizeView }}</option>
+                                            @empty
+
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Couleur</label>
+                                        <select name="" id="" wire:model='productQuickColor'>
+                                            <option value="">Choisir une couleur</option>
+                                            @forelse ($productColorView as $colorView)
+                                                <option value="{{ $colorView }}">{{ ucfirst($colorView)}}</option>
+                                            @empty
+
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="detail-extralink">
+                                    <div class="detail-qty border radius">
+                                        <a href="#" class="qty-down" wire:click='decrement'><i class="fi-rs-angle-small-down"></i></a>
+                                        <span class="qty-val">{{ $quantityProduct }}</span>
+                                        <a href="#" class="qty-up" wire:click='increment({{ $productQuantity }})'><i class="fi-rs-angle-small-up"></i></a>
+                                    </div>
+                                    <div class="product-extra-link2">
+                                        <button type="submit" class="button button-add-to-cart"
+                                            wire:click.prevent="addToCartQuickView('{{$productId}}','{{ addslashes($productName) }}', {{ $productSalePrice }})"
+                                            {{ $productQuantity == 0 ? 'disabled' : '' }}>
+                                            {{ $productQuantity == 0 ? 'Rupture de stock' : 'Ajouter au panier' }}</button>
+
+                                        @php
+                                            $item = Cart::instance('wishlist')->content()->pluck('id');
+                                        @endphp
+                                        @if ($item->contains($productId))
+
+                                            <a aria-label="Rétirer aux favoris" class="action-btn hover-up" wire:click.prevent="deleteToWishlist({{$productId}})">
+                                                <i class="fi-rs-heart"></i></a>
+
+                                            @else
+
+                                                <a aria-label="Ajouter aux favoris" class="action-btn hover-up" wire:click.prevent="addToWishlist('{{$productId}}','{{ addslashes($productName) }}', {{ $productSalePrice }})">
+                                                    <i class="fi-rs-heart"></i></a>
+                                        @endif
+
+                                    </div>
+                                </div>
+                                <ul class="product-meta font-xs color-grey mt-20">
+                                    <span class="mb-5">SKU: <a href="#">FWM15VKT</a></span>
+                                    <span class="mb-5">Tags: <a href="#" rel="tag">Cloth</a>, <a href="#" rel="tag">Women</a>, <a href="#" rel="tag">Dress</a> </span>
+                                    <span>Disponible:<span class="in-stock text-success ml-5">{{ $productQuantity }} Peoduits en Stock</span></span>
+                                </ul>
+                            </div>
+                            <!-- Detail Info -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </main>
+
+    <script>
+        window.addEventListener('showProductQuickViewModal', event => {
+           // Écoutez l'événement personnalisé 'openModal'
+           $('#quickViewModal').modal('show'); // Affiche la modale
+       });
+         window.addEventListener('hideQuickViewModal', event => {
+            // Écoutez l'événement personnalisé 'openModal'
+            $('#quickViewModal').modal('hide'); // Affiche la modale
+        });
+
+    </script>
 </div>

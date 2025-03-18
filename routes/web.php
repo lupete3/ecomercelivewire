@@ -9,6 +9,7 @@ use App\Livewire\DetailsComponent;
 use App\Livewire\HomeComponent;
 use App\Livewire\ShopComponent;
 use App\Livewire\CategoryComponent;
+use App\Livewire\PromotionsComponent;
 use App\Livewire\SearchComponent;
 use App\Livewire\ThankyouComponent;
 use App\Livewire\WishlistComponent;
@@ -22,6 +23,7 @@ Route::get('/search-product', SearchComponent::class)->name('product.search');
 Route::get('/cart', CartComponent::class)->name('cart');
 Route::get('/details/{slug}', DetailsComponent::class)->name('details');
 Route::get('/wishlist', WishlistComponent::class)->name('wishlist');
+Route::get('/promotions', PromotionsComponent::class)->name('promotions');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

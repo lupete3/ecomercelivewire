@@ -13,6 +13,8 @@
         <meta property="og:url" content="">
         <meta property="og:image" content="">
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/') }}assets/imgs/theme/favicon.ico">
+
+
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/main.css">
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/custom.css">
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/button.css">
@@ -704,7 +706,29 @@
                 $('#editShippingModal').modal('hide'); // Affiche la modale
             });
 
-            //Confim before
+
+
+            window.addEventListener('showAddSliderModal', event => {
+                // Écoutez l'événement personnalisé 'openModal'
+                $('#addSliderModal').modal('show'); // Affiche la modale
+            });
+
+            window.addEventListener('openEditShippingModal', event => {
+                // Écoutez l'événement personnalisé 'openModal'
+                $('#editShippingModal').modal('show'); // Affiche la modale
+            });
+
+            window.addEventListener('hideAddSliderModal', event => {
+                // Écoutez l'événement personnalisé 'openModal'
+                $('#addSliderModal').modal('hide'); // Affiche la modale
+            });
+
+            window.addEventListener('hideEditShippingModal', event => {
+                // Écoutez l'événement personnalisé 'openModal'
+                $('#editShippingModal').modal('hide'); // Affiche la modale
+            });
+
+            //Confim before delete shipping adress
             window.addEventListener('clientConfirm', (event) => {
 
                 Swal.fire({
@@ -725,6 +749,33 @@
 
                     if (result.isConfirmed) {
                         Livewire.dispatch('clientConfirmAction', {id: event.detail.id});
+                    } else {
+                        Livewire.dispatch('makeActionCancel', {id: event.detail.id});
+                    }
+                });
+            })
+
+            //Confim before delete slider
+            window.addEventListener('sliderConfirm', (event) => {
+
+                Swal.fire({
+
+                    // icon: event.detail.type,
+                    title: event.detail.title,
+                    html: event.detail.message,
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonColor: '#33cc33',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Non',
+                    confirmButtonText: 'Oui'
+
+                })
+
+                .then((result) => {
+
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('sliderConfirmAction', {id: event.detail.id});
                     } else {
                         Livewire.dispatch('makeActionCancel', {id: event.detail.id});
                     }

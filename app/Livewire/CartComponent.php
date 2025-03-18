@@ -23,7 +23,12 @@ class CartComponent extends Component
     public function addQuantityToCart($cartId)
     {
         $cart = Cart::instance('cart')->get($cartId);
-        $nouvelleQuantite = $cart->qty + 1;
+        if ($cart->model->quantity > $cart->qty) {
+            $nouvelleQuantite = $cart->qty + 1;
+        }else{
+            $nouvelleQuantite = $cart->model->quantity;
+            flash()->info('Cette quantité n\'est pas dispobible ! il reste '.$cart->model->quantity.' en stock');
+        }
         Cart::instance('cart')->update($cartId, $nouvelleQuantite);
         $this->dispatch('refreshComponent');
     }
@@ -138,6 +143,11 @@ class CartComponent extends Component
         $this->setCheckoutForAmount();
 
         $products = Product::inRandomOrder()->take(12)->get();
+
+        if (Auth::check()) {
+            Cart::instance('cart')->store(Auth::user()->email);
+            Cart::instance('wishlist')->store(Auth::user()->email);
+        }
 
         return view('livewire.cart-component', ['products' => $products]);
     }

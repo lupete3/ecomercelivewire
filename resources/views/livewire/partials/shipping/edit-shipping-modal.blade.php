@@ -43,9 +43,8 @@
                     </div>
                     @error('adress_type') <span class="text-danger text-center">{{ $message }}</span> @enderror
 
-
                     <div class="form-group">
-                        <input type="text" class="form-control" wire:model='name' id="recipient-name" placeholder="Entrez votre nom complet">
+                        <input type="text" class="form-control" wire:model='name' values="{{ $name }}" id="recipient-name" placeholder="Entrez votre nom complet">
                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 

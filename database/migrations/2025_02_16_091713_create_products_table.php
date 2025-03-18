@@ -19,6 +19,7 @@ return new class extends Migration
             $table->longText('long_description')->nullable();
             $table->decimal('regular_price');
             $table->decimal('sale_price');
+            $table->unsignedInteger('quantity')->default(100);
             $table->string('image');
             $table->longText('images')->nullable();
             $table->string('size')->nullable();

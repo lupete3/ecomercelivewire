@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CarticonComponent extends Component
@@ -18,6 +19,11 @@ class CarticonComponent extends Component
 
     public function render()
     {
+        if (Auth::check()) {
+            Cart::instance('cart')->store(Auth::user()->email);
+            Cart::instance('wishlist')->store(Auth::user()->email);
+        }
+
         return view('livewire.carticon-component');
     }
 }

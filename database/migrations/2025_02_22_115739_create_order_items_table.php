@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('order_id')->references('id')->on('orders')->cascadeOnDelete();
             $table->decimal('price');
             $table->decimal('quantity');
+            $table->string('options')->nullable();
             $table->timestamps();
         });
     }
