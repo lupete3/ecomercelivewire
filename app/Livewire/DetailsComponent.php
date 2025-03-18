@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class DetailsComponent extends Component
@@ -16,11 +17,27 @@ class DetailsComponent extends Component
     public $productColor;
     public $productSize;
 
+    public $productId;
+    public $productName;
+    public $productShortDescription;
+    public $productSalePrice;
+    public $productRegularPrice;
+    public $productQuantity;
+    public $productImagesView;
+    public $productSizeView = [];
+    public $productColorView= [];
+
+    public $productQuickSize;
+    public $productQuickColor;
 
 
-    public function increment()
+    public function increment($productQuantity)
     {
-        $this->quantityProduct++;
+        if ($productQuantity > $this->quantityProduct) {
+            $this->quantityProduct++;
+        }else{
+            flash()->info('Cette quantité n\'est pas dispobible ! il reste '.$productQuantity.' en stock');
+        }
     }
 
     public function decrement()
@@ -55,6 +72,21 @@ class DetailsComponent extends Component
         flash()->success('Le produit ajouté au panier.');
     }
 
+    public function addToCartQuickView($productId, $productName, $productSalePrice)
+    {
+        $cart = Cart::instance('cart')
+            ->add($productId, $productName, $this->quantityProduct, $productSalePrice, ['color' => $this->productQuickColor, 'size' => $this->productQuickSize])
+            ->associate(Product::class);
+
+        $this->dispatch('refreshComponent');
+
+        $this->dispatch('hideQuickViewModal');
+
+
+        flash()->success('Le produit ajouté au panier.');
+
+    }
+
     public function addToWishlist($productId, $productName, $productSalePrice)
     {
         Cart::instance('wishlist')->add($productId, $productName, 1, $productSalePrice)->associate(Product::class);
@@ -73,6 +105,34 @@ class DetailsComponent extends Component
         }
     }
 
+    public function showProductQuickViewModal($productId)
+    {
+        $product = Product::where('id', $productId)->first();
+
+        $this->productId = $product->id;
+        $this->productName = $product->name;
+        $this->productShortDescription = $product->short_description;
+        $this->productSalePrice = $product->sale_price;
+        $this->productRegularPrice = $product->regular_price;
+        $this->productQuantity = $product->quantity;
+
+        $this->productImagesView = $product->image;
+
+        $this->productSizeView = json_decode($product->size);
+
+        $this->productColorView = json_decode($product->color);
+
+        $this->dispatch('showProductQuickViewModal');
+    }
+
+    public function resentQuantity()
+    {
+        $this->quantityProduct = 1;
+        $this->productQuickSize = '';
+        $this->productQuickColor = '';
+    }
+
+
     public function render()
     {
         $product = Product::where('slug', $this->slug)->first();
@@ -85,6 +145,11 @@ class DetailsComponent extends Component
         $newProducts = Product::latest()->take(3)->get();
 
         $categories = Category::all();
+
+        if (Auth::check()) {
+            Cart::instance('cart')->store(Auth::user()->email);
+            Cart::instance('wishlist')->store(Auth::user()->email);
+        }
 
         return view('livewire.details-component', [
             'product' => $product,

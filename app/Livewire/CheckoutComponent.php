@@ -2,12 +2,17 @@
 
 namespace App\Livewire;
 
+use App\Jobs\OrderConfirmedJob;
+use App\Mail\OrderConfirmedMail;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\Shipping;
 use App\Models\Transaction;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
@@ -40,11 +45,20 @@ class CheckoutComponent extends Component
     {
         $this->dispatch('openAddShippingModal');
     }
+
     public function showEditShippingModal($idShippingAdress)
     {
-        $this->editShippingAdress($idShippingAdress);
-        $this->dispatch('openEditShippingModal');
+        $shippingAdress = Shipping::where('id', $idShippingAdress)->first();
 
+        $this->idShippingAdress = $idShippingAdress;
+        $this->adress_type = $shippingAdress->adress_type;
+        $this->name = $shippingAdress->name;
+        $this->phone = $shippingAdress->phone;
+        $this->email = $shippingAdress->email;
+        $this->city = $shippingAdress->city;
+        $this->adress = $shippingAdress->adress;
+
+        $this->dispatch('openEditShippingModal');
     }
 
     public function editShippingAdress($idShippingAdress)
@@ -143,6 +157,8 @@ class CheckoutComponent extends Component
             message: $message,
             id: $this->idShippingAdress
         );
+
+
     }
 
 
@@ -220,6 +236,12 @@ class CheckoutComponent extends Component
                 $orderItem->price = $cart->price;
                 $orderItem->quantity = $cart->qty;
 
+                if ($cart->options) {
+                    $orderItem->options = serialize($cart->options);
+                }
+
+                Product::find($cart->id)->decrement('quantity', $cart->qty);
+
                 $orderItem->save();
             }
 
@@ -239,6 +261,8 @@ class CheckoutComponent extends Component
             Cart::instance('cart')->destroy();
 
             session()->forget('checkout');
+
+            OrderConfirmedJob::dispatch($order);
 
         }else{
 
