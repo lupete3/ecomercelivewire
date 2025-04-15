@@ -166,10 +166,7 @@
                                             </div>
                                             <div class="col-6 col-md-3 text-center text-danger">
                                                 <a href="" wire:click.prevent='showEditShippingModal({{ $shippingAdresse->id }})'><i class="fi-rs-pencil mr-10" style="font-size: 16px"></i></a>
-                                                {{-- <a href="" wire:click.prevent='deleteShippingAdress({{ $shippingAdresse->id }})'><i class="fi-rs-trash" style="font-size: 16px"></i></a> --}}
                                                 <a href="" wire:click.prevent='sendConfirm({{ $shippingAdresse->id }}, "warning", "Voulez-vous supprimer cette adresse", "Supprimer")'><i class="fi-rs-trash" style="font-size: 16px"></i></a>
-
-
                                             </div>
                                         </div>
 

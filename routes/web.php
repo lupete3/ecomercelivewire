@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\AboutComponent;
 use App\Livewire\Admin\AdminDashboardComponemt;
 use App\Livewire\CartComponent;
 use App\Livewire\CheckoutComponent;
@@ -9,6 +10,7 @@ use App\Livewire\DetailsComponent;
 use App\Livewire\HomeComponent;
 use App\Livewire\ShopComponent;
 use App\Livewire\CategoryComponent;
+use App\Livewire\ContactComponent;
 use App\Livewire\PromotionsComponent;
 use App\Livewire\SearchComponent;
 use App\Livewire\ThankyouComponent;
@@ -24,6 +26,9 @@ Route::get('/cart', CartComponent::class)->name('cart');
 Route::get('/details/{slug}', DetailsComponent::class)->name('details');
 Route::get('/wishlist', WishlistComponent::class)->name('wishlist');
 Route::get('/promotions', PromotionsComponent::class)->name('promotions');
+Route::get('/about', AboutComponent::class)->name('about');
+Route::get('/contact', ContactComponent::class)->name('contact');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

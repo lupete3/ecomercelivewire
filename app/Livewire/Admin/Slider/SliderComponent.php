@@ -9,6 +9,9 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Illuminate\Support\Str;
 
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 class SliderComponent extends Component
 {
     use WithPagination;
@@ -59,8 +62,6 @@ class SliderComponent extends Component
             message: $message,
             id: $this->idSlider
         );
-
-
     }
 
     #[On('sliderConfirmAction')]
@@ -104,11 +105,24 @@ class SliderComponent extends Component
         $slider->sub_title = $this->sub_title;
         $slider->link = $this->link;
         $slider->offer = $this->offer;
-        $slider->image = $this->image;
         $slider->start_date = $this->start_date;
         $slider->end_date = $this->end_date;
         $slider->status = $this->status;
         $slider->type = 'Slider';
+
+
+        $image_name = time().'.'.$this->image->extension();
+        $slider->image = $image_name;
+
+        if($this->image)
+        {
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($this->image);
+            // resize image proportionally to 300px width
+            $image->scale(width: 300, height: 200);
+            // save modified image in new format
+            $image->toPng()->save(base_path('public/admin/slider/'.$image_name));
+        }
 
         $slider->save();
 
@@ -118,6 +132,11 @@ class SliderComponent extends Component
         $this->reset();
 
         flash()->success('Le slide ajouté.');
+    }
+
+    public function showEditSliderModal($idSlider)
+    {
+        dd($idSlider);
     }
 
     public function render()

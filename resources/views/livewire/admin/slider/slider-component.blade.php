@@ -88,7 +88,7 @@
                             <td><p class="text-center {{ $slider->status == 1 ? 'bg-3' : 'bg-6' }}">{{ $slider->status == 1 ? 'Actif' : 'Inactif' }}</p></td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="" wire:click.prevent='showEditShippingModal({{ $slider->id }})'><i class="fi-rs-pencil mr-10 text-info" style="font-size: 16px"></i></a>
+                                    <a href="" wire:click.prevent='showEditSliderModal({{ $slider->id }})'><i class="fi-rs-pencil mr-10 text-info" style="font-size: 16px"></i></a>
                                     <a href="" wire:click.prevent='sendConfirm({{ $slider->id }}, "warning", "Voulez-vous supprimer ce slider?", "Supprimer")'><i class="fi-rs-trash" style="font-size: 16px"></i></a>
                                 </div>
                             </td>
