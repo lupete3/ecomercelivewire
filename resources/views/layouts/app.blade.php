@@ -62,7 +62,11 @@
                                             @auth
 
                                                 <li>
-                                                    <i class="fi-rs-key"></i><a href="{{ url('/dashboard') }}" wire:navigate>Tableau de bord </a>
+                                                    @if (Auth::user()->usertype == 'admin')
+                                                        <i class="fi-rs-key"></i><a href="{{ route('admin.dashboard') }}" wire:navigate>Tableau de bord </a>
+                                                    @else
+                                                        <i class="fi-rs-key"></i><a href="{{ route('client.dashboard') }}" wire:navigate>Tableau de bord </a>
+                                                    @endif
                                                     <i class="fi-rs-user"></i> {{ Auth::user()->name }}
                                                     <form method="POST" action="{{ route('logout') }}">
                                                         @csrf
@@ -202,7 +206,7 @@
                                 @livewire('wishlisticon-component')
 
                                 @livewire('carticon-component')
-                                
+
                                 <div class="header-action-icon-2 d-block d-lg-none">
                                     <div class="burger-icon burger-icon-white">
                                         <span class="burger-icon-top"></span>
@@ -262,12 +266,42 @@
                         <div class="single-mobile-header-info mt-30">
                             <a href="{{ route('contact') }}"> Notre Adresse </a>
                         </div>
-                        <div class="single-mobile-header-info">
-                            <a href="{{ route('login') }}">Se connecter</a>
-                        </div>
-                        <div class="single-mobile-header-info">
-                            <a href="{{ route('register') }}">S'inscrire</a>
-                        </div>
+                        @if (Route::has('login'))
+                            <nav class="-mx-3 flex flex-1 justify-end">
+                                @auth
+                                    <div class="single-mobile-header-info">
+                                        @if (Auth::user()->usertype == 'admin')
+                                            <a href="{{ route('admin.dashboard') }}" wire:navigate>Tableau de bord </a>
+                                        @else
+                                            <a href="{{ route('client.dashboard') }}" wire:navigate>Tableau de bord </a>
+                                        @endif
+                                        <i class="fi-rs-user"></i> {{ Auth::user()->name }}
+                                    </div>
+
+                                    <div class="single-mobile-header-info">
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+
+                                            <a href="route('logout')"
+                                                onclick="event.preventDefault();
+                                                this.closest('form').submit();">Se déconnecter</a>
+
+                                        </form>
+                                    </div>
+
+                                    @else
+
+                                    <div class="single-mobile-header-info">
+                                        <a href="{{ route('login') }}" wire:navigate>Se connecter</a>
+                                    </div>
+                                    <div class="single-mobile-header-info">
+                                        <a href="{{ route('register') }}" wire:navigate>S'inscrire</a>
+                                    </div>
+
+                                @endauth
+                            </nav>
+                         @endif
+
                         <div class="single-mobile-header-info">
                             <a href="#">(+1) 0000-000-000 </a>
                         </div>

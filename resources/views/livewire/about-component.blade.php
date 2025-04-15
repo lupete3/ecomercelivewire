@@ -11,20 +11,19 @@
         <div class="container pt-25">
             <div class="row">
                 <div class="col-lg-6 align-self-center mb-lg-0 mb-4">
-                    <h6 class="mt-0 mb-15 text-uppercase font-sm text-brand wow fadeIn animated">Our Company</h6>
+                    <h6 class="mt-0 mb-15 text-uppercase font-sm text-brand wow fadeIn animated">Notre Organisation</h6>
                     <h1 class="font-heading mb-40">
-                        We are Building The Destination For Getting Things Done
+                        {{ $about->title }}
                     </h1>
-                    <p>Tempus ultricies augue luctus et ut suscipit. Morbi arcu, ultrices purus dolor erat bibendum sapien metus.</p>
-                    <p>Tempus ultricies augue luctus et ut suscipit. Morbi arcu, ultrices purus dolor erat bibendum sapien metus. Sit mi, pharetra, morbi arcu id. Pellentesque dapibus nibh augue senectus. </p>
+                    <p>{{ $about->description }}</p>
                 </div>
                 <div class="col-lg-6">
-                    <img src="{{ asset('/') }}assets/imgs/page/about-1.png" alt="">
+                    <img src="{{ asset('/'.$about->image) }}" alt="">
                 </div>
             </div>
         </div>
     </section>
-    <section id="testimonials" class="section-padding">
+    {{-- <section id="testimonials" class="section-padding">
         <div class="container pt-25">
             <div class="row mb-50">
                 <div class="col-lg-12 col-md-12 text-center">
@@ -157,5 +156,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 </main>

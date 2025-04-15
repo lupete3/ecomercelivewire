@@ -31,7 +31,7 @@
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-success btn-sm" wire:click.prevent='showAddSliderModal'>Ajouter</button>
+                <button class="btn btn-warning btn-sm" wire:click.prevent='showAddSliderModal'>Ajouter</button>
                 {{-- <div class="sort-by-cover">
                     <div class="sort-by-product-wrap">
                         <div class="sort-by">
@@ -81,7 +81,7 @@
                             <td>{{ $slider->title }}</td>
                             <td>{{ $slider->sub_title }}</td>
                             <td>{{ $slider->offer }}</td>
-                            <td><img src="{{ asset('/').$slider->image }}" alt="" width="55px" srcset=""></td>
+                            <td><img src="{{ $slider->getImage() }}" alt="" width="55px" srcset=""></td>
                             <td>{{ $slider->start_date }}</td>
                             <td>{{ $slider->end_date }}</td>
                             <td>{{ $slider->type }}</td>

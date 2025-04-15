@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col-lg-7 col-md-6">
                                     <div class="single-slider-img single-slider-img-1">
-                                        <img class="animated slider-1-1" src="{{ $slider->image }}" alt="">
+                                        <img class="animated slider-1-1" src="{{ $slider->getImage() }}" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -30,178 +30,6 @@
             <div class="slider-arrow hero-slider-1-arrow"></div>
         </section>
         <section class="featured section-padding position-relative">
-            <div class="container">
-                <div class="row">
-                    @foreach ($categories as $category)
-
-                        <div class="col-lg-2 col-md-4 mb-md-3 col-6">
-                            <div class="banner-features wow fadeIn animated hover-up">
-                                <img src="{{ $category->image }}" alt="" style="width: 70px">
-                                <h4 class="bg-1">{{ $category->name }}</h4>
-                            </div>
-                        </div>
-
-                    @endforeach
-                </div>
-            </div>
-
-            <style>
-
-                .countdown{
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-                }
-                .countdown > div{
-                display: flex;
-                flex-wrap: nowrap;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                margin-top: 50px;
-                box-shadow: 1px 1px 15px rgba(0,0,0,0.25);
-                width: 80px;
-                height: 80px;
-                border-radius: 5px;
-                }
-                .number {
-                font-weight: 500;
-                font-size: 44px;
-                color: #CAA78C;
-                }
-
-                div span:last-of-type{
-                font-size: 12px;
-                }
-
-                @media screen and (max-width:600px){
-                h1{
-                    font-size: 40px;
-                }
-
-                .countdown{
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 10px;
-                    margin-top: 30px;
-                }
-                .countdown > div{
-                    background-color: #fff;
-                    width: 250px;
-                    height: 60px;
-                    margin: 0;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    padding: 20px;
-                }
-                div span:last-of-type{
-                font-size: 24px;
-                    text-transform: uppercase;
-                }
-                .number {
-                font-size: 34px;
-                }
-                }
-            </style>
-
-            <div class="container">
-                <div class="main">
-                    <h1>Until new beginnings</h1>
-                    <div class="countdown">
-                    <div>
-                        <i class="fi-rs-alarm-clock" style="font-size: 30px"></i>
-                        <span>Horloge</span>
-                    </div>
-                    <div>
-                        <span class="number days"></span>
-                        <span>Jours</span>
-                    </div>
-                    <div>
-                        <span class="number hours"></span>
-                        <span>Heures</span>
-                    </div>
-                    <div>
-                        <span class="number minutes"></span>
-                        <span>Minutes</span>
-                    </div>
-                    <div>
-                        <span class="number seconds"></span>
-                        <span>Sécondes</span>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            @if ($saleTimersProducts->count() > 0 && $saleTimer->status == 1 && $saleTimer->sale_time > Carbon\Carbon::now())
-
-                <section class="product-tabs section-padding position-relative wow fadeIn animated">
-                    <div class="bg-square"></div>
-                    <div class="container">
-                        <div class="tab-header">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Vont expirer bientôt</button>
-                                </li>
-                            </ul>
-                            <a href="#" class="view-more d-none d-md-flex">Voir plus<i class="fi-rs-angle-double-small-right"></i></a>
-                        </div>
-                        <!--End nav-tabs-->
-                        <div class="tab-content wow fadeIn animated" id="myTabContent">
-                            <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
-                                <div class="row product-grid-4">
-
-                                    @forelse ($saleTimersProducts as $saleTimersProduct)
-
-                                        <div class="col-lg-2 col-md-2 col-6 col-sm-6 g-1">
-                                            <div class="product-cart-wrap mb-10">
-                                                <div class="product-img-action-wrap">
-                                                    <div class="product-img product-img-zoom">
-                                                        <a href="{{ route('details', ['slug' => $saleTimersProduct->slug]) }}"  wire:navigate>
-                                                            <img class="default-img" src="{{ $saleTimersProduct->image }}" alt="">
-                                                            <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                                        <span class="hot">Hot</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content-wrap">
-                                                    <div class="product-category">
-                                                        <a href="shop.html">Music</a>
-                                                    </div>
-                                                    <h2><a href="{{ route('details', ['slug' => $saleTimersProduct->slug]) }}">{{ $saleTimersProduct->name }}</a></h2>
-                                                    <div class="rating-result" title="90%">
-                                                        <span>
-                                                            <span>90%</span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <span>${{ $saleTimersProduct->sale_price }} </span>
-                                                        <span class="old-price">${{ $saleTimersProduct->regular_price }}</span>
-                                                    </div>
-                                                    <div class="product-action-1 show">
-                                                        <a aria-label="Ajouter au panier" class="action-btn hover-up" wire:click.prevent="addToCart('{{$saleTimersProduct->id}}','{{ addslashes($saleTimersProduct->name) }}', 1, {{ $saleTimersProduct->sale_price }})"><i class="fi-rs-shopping-bag-add"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    @empty
-
-                                        <h5>Aucun produit trouvé</h5>
-
-                                    @endforelse
-
-
-                                </div>
-                                <!--End product-grid-4-->
-                            </div>
-                        </div>
-                        <!--End tab-content-->
-                    </div>
-                </section>
-
-            @endif
 
             <div class="container">
                 <style>
@@ -223,7 +51,7 @@
                         display: inline-block;
                         font-size: 16px;
                         padding: 10px;
-                        width: 130px;
+                        width: 160px;
                         height: 120px;
                         border-radius: 2px;
                         -webkit-box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
@@ -264,7 +92,7 @@
                     <h3 class="section-title mb-20"><span>Catégories</span> Populaires</h3>
                     <div class="firsthomecontent">
                         @foreach ($categories as $category)
-                            <a href="{{ route('product.category', ['slug' => $category->slug]) }}">
+                            <a href="{{ route('product.category', ['slug' => $category->slug]) }}" wire:navigate>
                                 <div class="homecontent">
                                     <img class="lazyloaded" src="{{ $category->image }}" alt="{{ $category->name }}" srcset="">
                                     <p>{{ $category->name }}</p>
@@ -370,9 +198,9 @@
 
                             <div class="card-1">
                                 <figure class=" img-hover-scale overflow-hidden">
-                                    <a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}"><img src="{{ $popularycategory->image }}" alt=""></a>
+                                    <a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}"><img src="{{ $popularycategory->image }}" alt=""  wire:navigate></a>
                                 </figure>
-                                <h5><a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}">{{ $popularycategory->name }}</a></h5>
+                                <h5><a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}"  wire:navigate>{{ $popularycategory->name }}</a></h5>
                             </div>
 
                         @endforeach
@@ -427,7 +255,7 @@
                             <div class="product-cart-wrap small hover-up">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="{{ route('details', ['slug' => $newproduct->slug]) }}">
+                                        <a href="{{ route('details', ['slug' => $newproduct->slug]) }}"  wire:navigate>
                                             <img class="default-img" src="{{ $newproduct->image }}" alt="">
                                             <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
                                         </a>
@@ -472,7 +300,7 @@
                             <div class="product-cart-wrap small hover-up">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="{{ route('details', ['slug' => $bestProduct->slug]) }}">
+                                        <a href="{{ route('details', ['slug' => $bestProduct->slug]) }}" wire:navigate>
                                             <img class="default-img" src="{{ $bestProduct->image }}" alt="">
                                             <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
                                         </a>
@@ -488,7 +316,7 @@
                                     </div>
                                 </div>
                                 <div class="product-content-wrap">
-                                    <h2><a href="{{ route('details', ['slug' => $bestProduct->slug]) }}">{{ $bestProduct->name }}</a></h2>
+                                    <h2><a href="{{ route('details', ['slug' => $bestProduct->slug]) }}"  wire:navigate>{{ $bestProduct->name }}</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                         </span>
