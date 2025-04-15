@@ -1,19 +1,17 @@
 <!-- Add Shipping Adress Model-->
-<div class="modal fade " wire:ignore.self id="addSliderModal" tabindex="-1" aria-labelledby="sliderModalLabel" aria-hidden="true">
+<div class="modal fade " wire:ignore.self id="editSliderModal" tabindex="-1" aria-labelledby="sliderModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ $form_title }}</h5>
-                <button type="button" class="btn-close" wire:click.prevent='hideAddSliderModal'></button>
+                <h5 class="modal-title" id="exampleModalLabel">Modifier Slider</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="post" class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Titre de haut</label>
-                            @if ($editForm)
-                                <input type="hidden" class="form-control" wire:model='idSlide'>
-                            @endif
+                            <input type="hidden" class="form-control" wire:model='idSlide' id="recipient-name">
                             <input type="text" class="form-control" wire:model='top_title' wire:keyup='generateSlug' id="recipient-name">
                             @error('top_title') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
@@ -78,17 +76,14 @@
 
                         </div>
                         @error('status') <span class="text-danger text-center">{{ $message }}</span> @enderror <br>
+
+
                     </div>
 
             </div>
             <div class="modal-footer">
-                @if ($editForm)
-                    <button type="button" wire:click.prevent='hideAddSliderModal' class="btn btn-fill-out btn-block btn-sm btn-secondary">Fermer</button>
-                    <button type="submit" wire:click.prevent='updateSlider' class="btn btn-fill-out btn-block btn-sm btn-warning">Modifier</button>
-                @else
-                    <button type="button" wire:click.prevent='hideAddSliderModal' class="btn btn-fill-out btn-block btn-sm btn-secondary" >Fermer</button>
-                    <button type="submit" wire:click.prevent='addSlider' class="btn btn-fill-out btn-block btn-sm btn-warning">Ajouter</button>
-                @endif
+                <button type="button" class="btn btn-fill-out btn-block btn-sm btn-secondary" data-bs-dismiss="modal" aria-label="Close">Fermer</button>
+                <button type="submit" wire:click.prevent='addSlider' class="btn btn-fill-out btn-block btn-sm btn-primary">Ajouter</button>
             </div></form>
         </div>
     </div>

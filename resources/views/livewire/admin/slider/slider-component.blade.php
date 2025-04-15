@@ -31,7 +31,7 @@
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-success btn-sm" wire:click.prevent='showAddSliderModal'>Ajouter</button>
+                <button class="btn btn-warning btn-sm" wire:click.prevent='showAddSliderModal'>Ajouter</button>
                 {{-- <div class="sort-by-cover">
                     <div class="sort-by-product-wrap">
                         <div class="sort-by">
@@ -81,14 +81,14 @@
                             <td>{{ $slider->title }}</td>
                             <td>{{ $slider->sub_title }}</td>
                             <td>{{ $slider->offer }}</td>
-                            <td><img src="{{ asset('/').$slider->image }}" alt="" width="55px" srcset=""></td>
+                            <td><img src="{{ $slider->getImage() }}" alt="" width="55px" srcset=""></td>
                             <td>{{ $slider->start_date }}</td>
                             <td>{{ $slider->end_date }}</td>
                             <td>{{ $slider->type }}</td>
                             <td><p class="text-center {{ $slider->status == 1 ? 'bg-3' : 'bg-6' }}">{{ $slider->status == 1 ? 'Actif' : 'Inactif' }}</p></td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="" wire:click.prevent='showEditShippingModal({{ $slider->id }})'><i class="fi-rs-pencil mr-10 text-info" style="font-size: 16px"></i></a>
+                                    <a href="" wire:click.prevent='showEditSliderModal({{ $slider->id }})'><i class="fi-rs-pencil mr-10 text-info" style="font-size: 16px"></i></a>
                                     <a href="" wire:click.prevent='sendConfirm({{ $slider->id }}, "warning", "Voulez-vous supprimer ce slider?", "Supprimer")'><i class="fi-rs-trash" style="font-size: 16px"></i></a>
                                 </div>
                             </td>
