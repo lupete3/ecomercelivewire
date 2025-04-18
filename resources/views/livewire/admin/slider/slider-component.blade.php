@@ -27,29 +27,11 @@
                             <li><a class="{{ $productPerPage == 20 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(20)'>20</a></li>
                             <li><a class="{{ $productPerPage == 30 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(30)'>30</a></li>
                             <li><a class="{{ $productPerPage == 40 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(40)'>40</a></li>
-                            <li><a class="{{ $productPerPage == 60 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(50)'>50</a></li>
+                            <li><a class="{{ $productPerPage == 60 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(60)'>60</a></li>
                         </ul>
                     </div>
                 </div>
                 <button class="btn btn-warning btn-sm" wire:click.prevent='showAddSliderModal'>Ajouter</button>
-                {{-- <div class="sort-by-cover">
-                    <div class="sort-by-product-wrap">
-                        <div class="sort-by">
-                            <span><i class="fi-rs-apps-sort"></i>Tri par:</span>
-                        </div>
-                        <div class="sort-by-dropdown-wrap">
-                            <span> {{ $shortProductBy }} <i class="fi-rs-angle-small-down"></i></span>
-                        </div>
-                    </div>
-                    <div class="sort-by-dropdown">
-                        <ul>
-                            <li><a class="{{ $shortProductBy == 'Defaut' ? 'active' : '' }}" wire:click.prevent="changeShortBy('Defaut')">Défaut</a></li>
-                            <li><a class="{{ $shortProductBy == 'Bas a Haut' ? 'active' : '' }}" wire:click.prevent="changeShortBy('Bas a Haut')">Prix: Bas à Haut</a></li>
-                            <li><a class="{{ $shortProductBy == 'Haut en Bas' ? 'active' : '' }}" wire:click.prevent="changeShortBy('Haut en Bas')">Prix: Haut en Bas</a></li>
-                            <li><a class="{{ $shortProductBy == 'Nouveaux Produits' ? 'active' : '' }}" wire:click.prevent="changeShortBy('Nouveaux Produits')">Nouveauté des produits</a></li>
-                        </ul>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
@@ -75,7 +57,7 @@
 
                     @forelse ($sliders as $index => $slider)
 
-                        <tr>
+                        <tr wire:key="slider-{{ $slider->id }}">
                             <td>{{ $index + $sliders->firstItem() }}</td>
                             <td>{{ $slider->top_title }}</td>
                             <td>{{ $slider->title }}</td>

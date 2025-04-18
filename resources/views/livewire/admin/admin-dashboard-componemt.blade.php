@@ -1,16 +1,16 @@
-<main class="main">
+<main class="main container">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow">Accueil</a>
+                <a href="{{ route('home') }}" rel="nofollow">Accueil</a>
                 <span></span> Mon compte
             </div>
         </div>
     </div>
     <section class="pt-10 pb-10">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-                <div class="col-lg-10 m-auto">
+                <div class="col-lg-12 m-auto">
                     <div class="row g-1">
                         <div class="col-md-3">
                             <div class="dashboard-menu">
@@ -21,6 +21,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="sliders-tab" data-bs-toggle="tab" href="#sliders" role="tab" aria-controls="sliders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Sliders</a>
                                     </li>
+                                    {{-- <li class="nav-item">
+                                        <a class="nav-link" id="categories-tab" data-bs-toggle="tab" href="#categories" role="tab" aria-controls="categories" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Catégories</a>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Commandes</a>
                                     </li>
@@ -54,50 +57,11 @@
                                 <div class="tab-pane fade" id="sliders" role="tabpanel" aria-labelledby="sliders-tab">
                                     @livewire('admin.slider.slider-component')
                                 </div>
+                                {{-- <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
+                                    @livewire('admin.categories.categories-component')
+                                </div> --}}
                                 <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="mb-0">Your Orders</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Order</th>
-                                                            <th>Date</th>
-                                                            <th>Status</th>
-                                                            <th>Total</th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>#1357</td>
-                                                            <td>March 45, 2022</td>
-                                                            <td>Processing</td>
-                                                            <td>$125.00 for 2 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#2468</td>
-                                                            <td>June 29, 2022</td>
-                                                            <td>Completed</td>
-                                                            <td>$364.00 for 5 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#2366</td>
-                                                            <td>August 02, 2022</td>
-                                                            <td>Completed</td>
-                                                            <td>$280.00 for 3 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @livewire('admin.orders.orderscomponent')
                                 </div>
                                 <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                     <div class="card">

@@ -7,6 +7,20 @@ use Illuminate\Support\Str;
 
 class Slider extends Model
 {
+    public $fillable = [
+        'top_title',
+        'slug',
+        'title',
+        'sub_title',
+        'offer',
+        'link',
+        'image',
+        'status',
+        'type',
+        'start_date',
+        'end_date',
+    ];
+
     public function getImage()
     {
         $isUrl = Str::isUrl($this->image);

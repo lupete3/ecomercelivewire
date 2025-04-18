@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Livewire\AboutComponent;
 use App\Livewire\Admin\AdminDashboardComponemt;
+use App\Livewire\Admin\Categories\CategoriesComponent;
 use App\Livewire\CartComponent;
 use App\Livewire\CheckoutComponent;
 use App\Livewire\Client\ClientDashboardComponent;
@@ -28,6 +29,7 @@ Route::get('/wishlist', WishlistComponent::class)->name('wishlist');
 Route::get('/promotions', PromotionsComponent::class)->name('promotions');
 Route::get('/about', AboutComponent::class)->name('about');
 Route::get('/contact', ContactComponent::class)->name('contact');
+// Route::get('/categories', CategoriesComponent::class)->name('categories.index');
 
 
 Route::get('/dashboard', function () {

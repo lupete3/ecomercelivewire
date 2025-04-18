@@ -123,7 +123,7 @@
 
                             @forelse ($products as $product)
 
-                                <div class="col-lg-2 col-md-2 col-6 col-sm-6 g-1">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-6 g-1">
                                     <div class="product-cart-wrap mb-10">
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
@@ -198,7 +198,7 @@
 
                             <div class="card-1">
                                 <figure class=" img-hover-scale overflow-hidden">
-                                    <a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}"><img src="{{ $popularycategory->image }}" alt=""  wire:navigate></a>
+                                    <a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}"><img src="{{ $popularycategory->getImage() }}" alt=""  wire:navigate></a>
                                 </figure>
                                 <h5><a href="{{ route('product.category', ['slug' => $popularycategory->slug]) }}"  wire:navigate>{{ $popularycategory->name }}</a></h5>
                             </div>
@@ -367,7 +367,7 @@
         </section>
     </main>
 
-    @push('scripts')
+    {{-- @push('scripts')
         <script>
             // my next birthday
             const newDate = new Date('{{ Carbon\Carbon::parse($saleTimer->sale_time) }}').getTime()
@@ -395,5 +395,5 @@
 
             }, 1000)
         </script>
-    @endpush
+    @endpush --}}
 </div>

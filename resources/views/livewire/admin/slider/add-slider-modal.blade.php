@@ -1,95 +1,105 @@
-<!-- Add Shipping Adress Model-->
-<div class="modal fade " wire:ignore.self id="addSliderModal" tabindex="-1" aria-labelledby="sliderModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="addSliderModal" tabindex="-1" aria-labelledby="addSliderModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ $form_title }}</h5>
-                <button type="button" class="btn-close" wire:click.prevent='hideAddSliderModal'></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Titre de haut</label>
-                            @if ($editForm)
-                                <input type="hidden" class="form-control" wire:model='idSlide'>
-                            @endif
-                            <input type="text" class="form-control" wire:model='top_title' wire:keyup='generateSlug' id="recipient-name">
+            <form wire:submit.prevent="{{ $editForm ? 'updateSlider' : 'addSlider' }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSliderModalLabel">{{ $form_title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    {{-- Affichage des erreurs --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="topTitle" class="form-label">Top Title</label>
+                            <input type="text" class="form-control" wire:model='top_title' id="topTitle">
                             @error('top_title') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" wire:model='slug' id="recipient-name" placeholder="Slug">
+
+                        <div class="mb-3 col-md-6">
+                            <label for="slug" class="form-label">Slug</label>
+                            <input type="text" class="form-control" wire:model='slug' id="slug">
                             @error('slug') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="">Titre principal</label>
-                            <input type="text" class="form-control" wire:model='title' id="recipient-name" placeholder="Entrez le titre principal">
+
+                        <div class="mb-3 col-md-6">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" wire:model='title' id="title">
                             @error('title') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="">Sous titre</label>
-                            <input type="text" class="form-control" wire:model='sub_title' id="recipient-name" placeholder="Entrez le sous titre">
+
+                        <div class="mb-3 col-md-6">
+                            <label for="subTitle" class="form-label">Sub Title</label>
+                            <input type="text" class="form-control" wire:model='sub_title' id="subTitle">
                             @error('sub_title') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="">Pourcentage de l'offre</label>
-                            <input type="text" class="form-control" wire:model='offer' id="recipient-name" placeholder="Entrez le pourcentage de l'offre">
+
+                        <div class="mb-3 col-md-6">
+                            <label for="offer" class="form-label">Offer</label>
+                            <input type="text" class="form-control" wire:model='offer' id="offer">
                             @error('offer') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="">Lien du slider</label>
-                            <input type="text" wire:model='link' class="form-control" id="recipient-name" placeholder="Entrez le lien du slider">
+                        <div class="mb-3 col-md-6">
+                            <label for="link" class="form-label">Lien</label>
+                            <input type="text" class="form-control" wire:model='link' id="link">
                             @error('link') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Image du slider</label>
-                            <input type="file" wire:model='image' class="form-control" id="recipient-name" placeholder="">
-                            @error('image') <span class="text-danger">{{ $message }}</span> @enderror
+                        <div class="mb-3 col-md-6">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" class="form-control" wire:model='new_image' id="image">
+                            @if ($new_image)
+                            <img src="{{ $new_image->temporaryUrl() }}" alt="" width="200px" class="img-thumbnail mt-2">
+                            @elseif ($image)
+                            {{ $image }}
+                                <img src="{{ asset('admin/slder/'.$image) }}" alt="" width="200px" class="img-thumbnail mt-2">
+                            @endif
+                            @error('new_image') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        @if ($image)
-                            <img src="{{ $image->temporaryUrl() }}" alt="" width="200px" class="img-thumbnail"> <br>
-                            @elseif ($new_image)
-                            <img src="{{ asset('admin/slider/'.$new_image) }}" alt="" width="200px" class="img-thumbnail"> <br>
-                        @endif
-                        <label for="">Date Début</label>
-                        <div class="form-group">
-                            <input type="date" wire:model='start_date' class="form-control" id="recipient-name" placeholder="Date Début">
+
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Statut</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" wire:model="status" name="statusGroup" id="actif" value="1">
+                                <label class="form-check-label" for="actif">Actif</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" wire:model="status" name="statusGroup" id="inactif" value="0">
+                                <label class="form-check-label" for="inactif">Inactif</label>
+                            </div>
+                            @error('status') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            <label for="startDate" class="form-label">Date de début</label>
+                            <input type="date" class="form-control" wire:model="start_date" id="startDate">
                             @error('start_date') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="">Date Fin</label>
-                            <input type="date" wire:model='end_date' class="form-control" id="recipient-name" placeholder="Date Fin">
+
+                        <div class="mb-3 col-md-6">
+                            <label for="endDate" class="form-label">Date de fin</label>
+                            <input type="date" class="form-control" wire:model="end_date" id="endDate">
                             @error('end_date') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="payment_method">
-
-                            <div class="icheck-material-orange icheck-inline">
-                                <input type="radio" id="someRadioId1" name="someGroupName" value="1" wire:ignore wire:model='status' />
-                                <label for="someRadioId1">Actif</label>
-                            </div>
-                            <div class="icheck-material-orange icheck-inline">
-                                <input type="radio" id="someRadioId2" name="someGroupName" value="0" wire:ignore wire:model='status' />
-                                <label for="someRadioId2">Inactif</label>
-                            </div>
-
-                        </div>
-                        @error('status') <span class="text-danger text-center">{{ $message }}</span> @enderror <br>
                     </div>
+                </div>
 
-            </div>
-            <div class="modal-footer">
-                @if ($editForm)
-                    <button type="button" wire:click.prevent='hideAddSliderModal' class="btn btn-fill-out btn-block btn-sm btn-secondary">Fermer</button>
-                    <button type="submit" wire:click.prevent='updateSlider' class="btn btn-fill-out btn-block btn-sm btn-warning">Modifier</button>
-                @else
-                    <button type="button" wire:click.prevent='hideAddSliderModal' class="btn btn-fill-out btn-block btn-sm btn-secondary" >Fermer</button>
-                    <button type="submit" wire:click.prevent='addSlider' class="btn btn-fill-out btn-block btn-sm btn-warning">Ajouter</button>
-                @endif
-            </div></form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">{{ $editForm ? 'Mettre à jour' : 'Ajouter' }}</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

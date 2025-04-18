@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="fr">
 
     <head>
 
@@ -14,15 +14,14 @@
         <meta property="og:image" content="">
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/') }}assets/imgs/theme/favicon.ico">
 
-
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/main.css">
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/custom.css">
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/button.css">
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/icheck/icheck-material.min.css">
 
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         @livewireStyles
-
-
 
     </head>
 
@@ -33,7 +32,7 @@
                     <div class="row align-items-center">
                         <div class="col-xl-3 col-lg-4">
                             <div class="header-info">
-                            <ul>
+                                <ul>
                                     <li>
                                         <a class="language-dropdown-active" href="#"> <i class="fi-rs-world"></i> Français <i class="fi-rs-angle-small-down"></i></a>
                                         <ul class="language-dropdown">
@@ -464,45 +463,58 @@
         <script>
 
             window.addEventListener('openAddShippingModal', event => {
-                // Écoutez l'événement personnalisé 'openModal'
                 $('#addShippingModal').modal('show'); // Affiche la modale
             });
-
-            window.addEventListener('openEditShippingModal', event => {
-                // Écoutez l'événement personnalisé 'openModal'
-                $('#editShippingModal').modal('show'); // Affiche la modale
-            });
-
             window.addEventListener('hideAddShippingModal', event => {
-                // Écoutez l'événement personnalisé 'openModal'
                 $('#addShippingModal').modal('hide'); // Affiche la modale
             });
 
+            window.addEventListener('openEditShippingModal', event => {
+                $('#editShippingModal').modal('show'); // Affiche la modale
+            });
             window.addEventListener('hideEditShippingModal', event => {
-                // Écoutez l'événement personnalisé 'openModal'
                 $('#editShippingModal').modal('hide'); // Affiche la modale
             });
 
-
-
             window.addEventListener('showAddSliderModal', event => {
-                // Écoutez l'événement personnalisé 'openModal'
                 $('#addSliderModal').modal('show'); // Affiche la modale
             });
-
-            window.addEventListener('openEditShippingModal', event => {
-                // Écoutez l'événement personnalisé 'openModal'
-                $('#editShippingModal').modal('show'); // Affiche la modale
+            window.addEventListener('showEditSliderModal', event => {
+                $('#addSliderModal').modal('show'); // Affiche la modale
             });
-
             window.addEventListener('hideAddSliderModal', event => {
-                // Écoutez l'événement personnalisé 'openModal'
                 $('#addSliderModal').modal('hide'); // Affiche la modale
             });
 
+
+            window.addEventListener('showAddCategoryModal', event => {
+                $('#addCategoryModal').modal('show'); // Affiche la modale
+            });
+            window.addEventListener('hideAddCategoryModal', event => {
+                $('#addCategoryModal').modal('hide'); // Affiche la modale
+            });
+
+
+            window.addEventListener('showEditCategoryModal', event => {
+                $('#editCategoryModal').modal('show'); // Affiche la modale
+            });
+            window.addEventListener('hideEditCategoryModal', event => {
+                $('#editCategoryModal').modal('hide'); // Affiche la modale
+            });
+
+
+            window.addEventListener('openEditShippingModal', event => {
+                $('#editShippingModal').modal('show'); // Affiche la modale
+            });
             window.addEventListener('hideEditShippingModal', event => {
-                // Écoutez l'événement personnalisé 'openModal'
                 $('#editShippingModal').modal('hide'); // Affiche la modale
+            });
+
+            window.addEventListener('hideOrderDetailsModal', event => {
+                $('#orderDetailsModal').modal('hide'); // Affiche la modale
+            });
+            window.addEventListener('showOrderDetailsModal', event => {
+                $('#orderDetailsModal').modal('show'); // Affiche la modale
             });
 
             //Confim before delete shipping adress

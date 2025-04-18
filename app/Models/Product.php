@@ -11,4 +11,9 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = ['quantity'];
+
+    public function orederItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }
