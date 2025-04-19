@@ -19,7 +19,6 @@
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/button.css">
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/icheck/icheck-material.min.css">
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @livewireStyles
 
@@ -148,7 +147,7 @@
                                         <li><a href="{{ route('about') }}" wire:navigate>A propos</a></li>
                                         <li><a href="{{ route('shop') }}" wire:navigate>Boutique</a></li>
                                         <li><a href="{{ route('contact') }}" wire:navigate>Contact</a></li>
-                                        <li><a href="#" wire:navigate>Mon compte<i class="fi-rs-angle-down"></i></a>
+                                        <li><a href="#">Mon compte<i class="fi-rs-angle-down"></i></a>
                                             @auth()
 
                                                 @if (Auth::user()->usertype == 'admin')
@@ -458,8 +457,6 @@
 
         <script src="{{ asset('/') }}assets/js/sweetalert2.all.min.js"></script>
 
-        @livewireScripts
-
         <script>
 
             window.addEventListener('openAddShippingModal', event => {
@@ -576,6 +573,8 @@
         </script>
 
         @stack('scripts')
+
+        @livewireScripts
 
     </body>
 

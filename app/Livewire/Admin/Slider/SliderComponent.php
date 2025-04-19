@@ -367,7 +367,7 @@ class SliderComponent extends Component
         ]);
 
         $this->dispatch('hideAddSliderModal');
-        flash()->flash('Slider ajouté avec succès.');
+        flash()->success('Slider ajouté avec succès.');
         $this->resetForm();
     }
 
@@ -421,8 +421,8 @@ class SliderComponent extends Component
             'end_date'   => $this->end_date,
         ]);
 
-        $this->dispatchBrowserEvent('hideAddSliderModal');
-        flash()->flash('message', 'Slider mis à jour avec succès.');
+        $this->dispatch('hideAddSliderModal');
+        flash()->success('Slider mis à jour avec succès.');
         $this->resetForm();
     }
 
