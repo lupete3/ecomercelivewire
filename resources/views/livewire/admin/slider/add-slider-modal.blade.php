@@ -63,7 +63,7 @@
                             <img src="{{ $new_image->temporaryUrl() }}" alt="" width="200px" class="img-thumbnail mt-2">
                             @elseif ($image)
                             {{ $image }}
-                                <img src="{{ asset('admin/slder/'.$image) }}" alt="" width="200px" class="img-thumbnail mt-2">
+                                <img src="{{ asset('admin/slider/'.$image) }}" alt="" width="200px" class="img-thumbnail mt-2">
                             @endif
                             @error('new_image') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>

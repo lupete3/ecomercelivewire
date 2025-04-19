@@ -76,7 +76,7 @@
                                             <div class="product-category">
                                                 <a href="shop.html">Music</a>
                                             </div>
-                                            <h2><a href="product-details.html">{{ $product->name }}</a></h2>
+                                            <h2><a href="{{ route('details', ['slug' => $product->slug]) }}"  wire:navigate>{{ $product->name }}</a></h2>
                                             <div class="rating-result" title="90%">
                                                 <span>
                                                     <span>90%</span>
@@ -87,7 +87,9 @@
                                                 <span class="old-price">${{ $product->regular_price }}</span>
                                             </div>
                                             <div class="product-action-1 show">
-                                                <a aria-label="Ajouter au panier" class="action-btn hover-up" wire:click.prevent="addToCart('{{$product->id}}','{{ addslashes($product->name) }}', 1, {{ $product->sale_price }})"><i class="fi-rs-shopping-bag-add"></i></a>
+                                                <button type="button" class="action-btn hover-up" wire:click="addToCart('{{$product->id}}','{{ addslashes($product->name) }}', 1, {{ $product->sale_price }})" aria-label="Ajouter au panier">
+                                                    <i class="fi-rs-shopping-bag-add"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

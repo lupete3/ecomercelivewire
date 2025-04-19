@@ -5,7 +5,7 @@
                 <div class="sidebar-widget widget_search">
                     <div class="search-form">
                         <form action="">
-                            <input type="search" name="search" wire:model.live='search' id="" placeholder="Rechercher........">
+                            <input type="search" name="search" wire:model.live='search' placeholder="Rechercher........">
                             <button type="submit"><i class="fi-rs-search"></i></button>
                         </form>
                     </div>
