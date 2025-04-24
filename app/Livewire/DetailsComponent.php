@@ -63,15 +63,26 @@ class DetailsComponent extends Component
         $this->productSize = $productSize;
     }
 
-    public function addToCart($productId, $productName, $productSalePrice)
+    public function addToCart($productId)
     {
+        $product = Product::findOrFail($productId);
+
         $cart = Cart::instance('cart')
-            ->add($productId, $productName, $this->quantityProduct, $productSalePrice, ['color' => $this->productColor, 'size' => $this->productSize])
-            ->associate(Product::class);
+            ->add(
+                $product->id,
+                $product->name,
+                $this->quantityProduct,
+                $product->sale_price,
+                [
+                    'color' => $this->productColor,
+                    'size' => $this->productSize
+                ]
+            )->associate(Product::class);
 
         $this->dispatch('refreshComponent');
-        flash()->success('Le produit ajouté au panier.');
+        flash()->success('Le produit a été ajouté au panier.');
     }
+
 
     public function addToCartQuickView($productId, $productName, $productSalePrice)
     {

@@ -102,9 +102,10 @@
                                             </div>
                                             <div class="product-extra-link2">
                                                 <button type="button" class="button button-add-to-cart"
-                                                    wire:click.prevent="addToCart('{{$product->id}}','{{ addslashes($product->name) }}', {{ $product->sale_price }})"
+                                                    wire:click.prevent="addToCart({{ $product->id }})"
                                                     {{ $product->quantity == 0 ? 'disabled' : '' }}>
-                                                    {{ $product->quantity == 0 ? 'Rupture de stock' : 'Ajouter au panier' }}</button>
+                                                    {{ $product->quantity == 0 ? 'Rupture de stock' : 'Ajouter au panier' }}
+                                                </button>
 
                                                 @php
                                                     $item = Cart::instance('wishlist')->content()->pluck('id');
