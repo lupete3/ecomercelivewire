@@ -173,7 +173,8 @@ class DetailsComponent extends Component
     }
 
     #[On('refreshComponent')]
-    public function refreshComponent(): void
+    public function refreshComponent()
     {
+        return redirect()->back();
     }
 }

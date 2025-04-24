@@ -96,9 +96,9 @@
                                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                         <div class="detail-extralink">
                                             <div class="detail-qty border radius">
-                                                <a class="qty-down" wire:click='decrement'><i class="fi-rs-angle-small-down"></i></a>
+                                                <a class="qty-down" wire:click.prevent='decrement'><i class="fi-rs-angle-small-down"></i></a>
                                                 <span class="qty-val">{{ $quantityProduct }}</span>
-                                                <a class="qty-up" wire:click='increment({{ $product->quantity }})'><i class="fi-rs-angle-small-up"></i></a>
+                                                <a class="qty-up" wire:click.prevent='increment({{ $product->quantity }})'><i class="fi-rs-angle-small-up"></i></a>
                                             </div>
                                             <div class="product-extra-link2">
                                                 <button type="button" class="button button-add-to-cart"

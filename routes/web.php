@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -25,7 +26,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', ShopComponent::class)->name('shop');
 Route::get('/product-category/{slug}', CategoryComponent::class)->name('product.category');
 Route::get('/search-product', SearchComponent::class)->name('product.search');
-Route::get('/cart', CartComponent::class)->name('cart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/details/{slug}', [DetailController::class, 'index'])->name('details');
 Route::get('/wishlist', WishlistComponent::class)->name('wishlist');
 Route::get('/promotions', PromotionsComponent::class)->name('promotions');
