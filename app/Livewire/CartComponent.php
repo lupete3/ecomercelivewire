@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class CartComponent extends Component
 {
@@ -18,7 +19,6 @@ class CartComponent extends Component
     public $taxAfterDiscount;
     public $totalAfterDiscount;
 
-    protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function addQuantityToCart($cartId)
     {
@@ -150,5 +150,10 @@ class CartComponent extends Component
         }
 
         return view('livewire.cart-component', ['products' => $products]);
+    }
+
+    #[On('refreshComponent')]
+    public function refreshComponent(): void
+    {
     }
 }

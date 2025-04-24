@@ -7,6 +7,7 @@ use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class DetailsComponent extends Component
 {
@@ -158,5 +159,10 @@ class DetailsComponent extends Component
             'newProducts' => $newProducts,
             'categories' => $categories,
         ]);
+    }
+
+    #[On('refreshComponent')]
+    public function refreshComponent(): void
+    {
     }
 }

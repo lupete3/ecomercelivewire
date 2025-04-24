@@ -6,7 +6,9 @@ use App\Models\Category;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+use Livewire\Livewire;
 use Livewire\WithPagination;
+use Livewire\Attributes\On;
 
 class ShopComponent extends Component
 {
@@ -84,5 +86,10 @@ class ShopComponent extends Component
             'products' => $products,
             'newProducts' => $newProducts,
         ]);
+    }
+
+    #[On('refreshComponent')]
+    public function refreshComponent(): void
+    {
     }
 }

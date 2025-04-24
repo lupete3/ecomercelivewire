@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DetailController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\AboutComponent;
 use App\Livewire\Admin\AdminDashboardComponemt;
@@ -19,12 +21,12 @@ use App\Livewire\WishlistComponent;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', HomeComponent::class)->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', ShopComponent::class)->name('shop');
 Route::get('/product-category/{slug}', CategoryComponent::class)->name('product.category');
 Route::get('/search-product', SearchComponent::class)->name('product.search');
 Route::get('/cart', CartComponent::class)->name('cart');
-Route::get('/details/{slug}', DetailsComponent::class)->name('details');
+Route::get('/details/{slug}', [DetailController::class, 'index'])->name('details');
 Route::get('/wishlist', WishlistComponent::class)->name('wishlist');
 Route::get('/promotions', PromotionsComponent::class)->name('promotions');
 Route::get('/about', AboutComponent::class)->name('about');

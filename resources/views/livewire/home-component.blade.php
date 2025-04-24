@@ -120,7 +120,6 @@
                 <div class="tab-content wow fadeIn animated" id="myTabContent">
                     <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
                         <div class="row product-grid-4">
-
                             @forelse ($products as $product)
 
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-6 g-1">
@@ -150,9 +149,7 @@
                                                 <span>${{ $product->sale_price }} </span>
                                                 <span class="old-price">${{ $product->regular_price }}</span>
                                             </div>
-                                            <div class="product-action-1 show">
-                                                <a aria-label="Ajouter au panier" class="action-btn hover-up" wire:click.prevent="addToCart('{{$product->id}}','{{ addslashes($product->name) }}', 1, {{ $product->sale_price }})"><i class="fi-rs-shopping-bag-add"></i></a>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>

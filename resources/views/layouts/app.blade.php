@@ -316,7 +316,7 @@
             </div>
         </div>
 
-        {{ $slot }}
+        @yield('content')
 
         <footer class="main">
             <section class="newsletter p-30 text-white wow fadeIn animated">

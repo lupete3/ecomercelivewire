@@ -5,10 +5,11 @@ namespace App\Livewire;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Attributes\On;
+
 
 class CarticonComponent extends Component
 {
-    protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function removeToCart($cartId)
     {
@@ -25,5 +26,10 @@ class CarticonComponent extends Component
         }
 
         return view('livewire.carticon-component');
+    }
+
+    #[On('refreshComponent')]
+    public function refreshComponent(): void
+    {
     }
 }
