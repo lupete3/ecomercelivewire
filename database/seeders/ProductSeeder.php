@@ -43,7 +43,7 @@ class ProductSeeder extends Seeder
             'red', 'green', 'yellow', 'white', 'pink'
         ];
 
-        foreach (range(1,100) as $key => $value) {
+        foreach (range(1,10) as $key => $value) {
             $productName = $dataFaker->unique()->name;
             Product::create([
                 'name' => $productName,

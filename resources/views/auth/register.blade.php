@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <main class="main">
         <section class="pt-20 pb-20">
             <div class="container">
@@ -76,7 +78,7 @@
             </div>
         </section>
     </main>
-</x-app-layout>
+@endsection
 <script>
     function togglePasswordVisibility() {
         const passwordInput = document.getElementById('password');

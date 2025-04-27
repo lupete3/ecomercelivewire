@@ -1,4 +1,4 @@
-<main class="main container">
+<main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
@@ -19,13 +19,19 @@
                                         <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Tableau de Bord</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Commandes</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" id="sliders-tab" data-bs-toggle="tab" href="#sliders" role="tab" aria-controls="sliders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Sliders</a>
                                     </li>
-                                    {{-- <li class="nav-item">
-                                        <a class="nav-link" id="categories-tab" data-bs-toggle="tab" href="#categories" role="tab" aria-controls="categories" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Catégories</a>
-                                    </li> --}}
                                     <li class="nav-item">
-                                        <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Commandes</a>
+                                        <a class="nav-link" id="categories-tab" data-bs-toggle="tab" href="#categories" role="tab" aria-controls="categories" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Catégories</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="track-product-tab" data-bs-toggle="tab" href="#track-product" role="tab" aria-controls="track-product" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Produits</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="about-tab" data-bs-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>A propos de nous</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Tracer vos Commandes</a>
@@ -54,14 +60,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                                    @livewire('admin.orders.orders-component')
+                                </div>
                                 <div class="tab-pane fade" id="sliders" role="tabpanel" aria-labelledby="sliders-tab">
                                     @livewire('admin.slider.slider-component')
                                 </div>
-                                {{-- <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
+                                <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
                                     @livewire('admin.categories.categories-component')
-                                </div> --}}
-                                <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-                                    @livewire('admin.orders.orderscomponent')
+                                </div>
+                                <div class="tab-pane fade" id="track-product" role="tabpanel" aria-labelledby="track-product-tab">
+                                    @livewire('admin.products.products-component')
+                                </div>
+                                <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+                                    @livewire('admin.about.about-component')
                                 </div>
                                 <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
                                     <div class="card">

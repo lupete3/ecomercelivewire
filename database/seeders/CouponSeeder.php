@@ -18,7 +18,7 @@ class CouponSeeder extends Seeder
             'coupon_type' => 'fixed',
             'coupon_value' => '100',
             'cart_value' => '1000',
-            'end_date' => '2025-02-25 10:22:46',
+            'end_date' => '2026-02-26 10:22:46',
         ]);
 
         Coupon::create([
@@ -26,7 +26,7 @@ class CouponSeeder extends Seeder
             'coupon_type' => 'percent',
             'coupon_value' => '2',
             'cart_value' => '50',
-            'end_date' => '2025-02-25 11:22:46',
+            'end_date' => '2026-02-26 11:22:46',
         ]);
     }
 }

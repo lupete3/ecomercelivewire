@@ -58,14 +58,13 @@
 
                         <div class="mb-3 col-md-6">
                             <label for="image" class="form-label">Image</label>
-                            <input type="file" class="form-control" wire:model='new_image' id="image">
-                            @if ($new_image)
-                            <img src="{{ $new_image->temporaryUrl() }}" alt="" width="200px" class="img-thumbnail mt-2">
-                            @elseif ($image)
-                            {{ $image }}
-                                <img src="{{ asset('admin/slider/'.$image) }}" alt="" width="200px" class="img-thumbnail mt-2">
+                            <input type="file" class="form-control" wire:model='image' id="fileInput" key="{{ $fileInputId }}">
+                            @if ($image)
+                            <img src="{{ $image->temporaryUrl() }}" alt="" width="200px" class="img-thumbnail mt-2">
+                            @elseif ($new_image)
+                                <img src="{{ asset('admin/slider/'.$new_image) }}" alt="" width="200px" class="img-thumbnail mt-2">
                             @endif
-                            @error('new_image') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('image') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-3 col-md-6">
@@ -96,7 +95,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-secondary" wire:click='resetForm'>Annuler</button>
                     <button type="submit" class="btn btn-primary">{{ $editForm ? 'Mettre à jour' : 'Ajouter' }}</button>
                 </div>
             </form>

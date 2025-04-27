@@ -46,7 +46,7 @@ class SearchComponent extends Component
 
     public function addToCart($productId, $productName, $quantityProduct, $productSalePrice)
     {
-        Cart::add($productId, $productName, $quantityProduct, $productSalePrice)->associate(Product::class);
+        $cart = Cart::add($productId, $productName, $quantityProduct, $productSalePrice)->associate(Product::class);
 
         flash()->success('Le produit ajouté au panier.');
 

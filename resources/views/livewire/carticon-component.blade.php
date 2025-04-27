@@ -12,7 +12,7 @@
 
                     <li>
                         <div class="shopping-cart-img">
-                            <a href="product-details.html"><img alt="Surfside Media" src="{{ asset($item->model->image) }}"></a>
+                            <a href="product-details.html"><img alt="Surfside Media" src="{{ asset('admin/products/'.$item->model->image) }}"></a>
                         </div>
                         <div class="shopping-cart-title">
                             <h4><a href="{{ route('details', ['slug' => $item->id]) }}">{{ ucwords(Str::substr($item->model->name, 0, 15)) }}</a></h4>

@@ -30,7 +30,7 @@
                                     <tbody>
                                         @foreach (Cart::instance('cart')->content() as $row)
                                             <tr>
-                                                <td class="image product-thumbnail"><img src="{{ $row->model->image }}" alt="#"></td>
+                                                <td class="image product-thumbnail"><img src="{{ asset('admin/products/'.$row->model->image) }}" alt="#"></td>
                                                 <td class="product-des product-name">
                                                     <h5 class="product-name"><a href="{{ route('details', ['slug' => $row->model->slug]) }}">{{ $row->model->name }}</a>
                                                         <div>

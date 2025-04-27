@@ -1,5 +1,4 @@
 <div>
-
     <style>
         *{
         box-sizing:border-box;
@@ -107,17 +106,16 @@
     </style>
     <div class="content mb-50">
         <div class="wrapper-1">
-          <div class="wrapper-2">
+        <div class="wrapper-2">
             <h1 class="text-warning">Merci!</h1>
             <h4>Génial! Votre commande a été envoyé avec succès.
             <br>Votre paiement est en cours de traitement.</h4>
             <p style="margin-bottom: 10px">Votre commande est #{{ $order->id }}. <br> Nous vous remercions d'avoir acheté dans notre magasin. Pour tout contact, vueillez nous écrire à cette adresse <a href="mailto:contact@pmarquet.com">contact@pmarquet.com</a>. Espérons vous retrouver à la prochaine</p>
 
             <a class="go-home btn btn-warning" href="{{ route('home') }}" style="margin-top: 30px !important">Retour à l'accueil</a>
-          </div>
+        </div>
         </div>
     </div>
 
-    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Source+Sans+Pro" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Source+Sans+Pro" rel="stylesheet">
 </div>

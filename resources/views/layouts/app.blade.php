@@ -144,7 +144,7 @@
                                 <nav>
                                     <ul>
                                         <li><a class="active" href="{{ route('home') }}" wire:navigate>Accueil </a></li>
-                                        <li><a href="{{ route('about') }}" wire:navigate>A propos</a></li>
+                                        <li><a href="{{ route('about') }}" wire:navigate>Apropos</a></li>
                                         <li><a href="{{ route('shop') }}" wire:navigate>Boutique</a></li>
                                         <li><a href="{{ route('contact') }}" wire:navigate>Contact</a></li>
                                         <li><a href="#">Mon compte<i class="fi-rs-angle-down"></i></a>
@@ -162,7 +162,7 @@
                                                         <form method="POST" action="{{ route('logout') }}">
                                                             @csrf
 
-                                                            <li><a href="route('logout')"
+                                                            <li><a href="#"
                                                                 onclick="event.preventDefault();
                                                                 this.closest('form').submit();">Se déconnecter</a>
                                                             </li>
@@ -178,7 +178,7 @@
                                                         <form method="POST" action="{{ route('logout') }}">
                                                             @csrf
 
-                                                            <li><a href="route('logout')"
+                                                            <li><a href="#"
                                                                 onclick="event.preventDefault();
                                                                 this.closest('form').submit();">Se déconnecter</a>
                                                             </li>
@@ -188,7 +188,10 @@
                                                 @endif
 
                                             @else
-
+                                                <ul class="sub-menu">
+                                                    <li><a href="{{ route('login') }}" wire:navigate>Se connecter</a></li>
+                                                    <li><a href="{{ route('register') }}" wire:navigate>Créer un compte</a></li>
+                                                </ul>
                                             @endauth
                                         </li>
                                     </ul>
@@ -499,6 +502,14 @@
                 $('#editCategoryModal').modal('hide'); // Affiche la modale
             });
 
+            window.addEventListener('showAddProductModal', event => {
+                $('#addProductModal').modal('show'); // Affiche la modale
+            });
+            window.addEventListener('hideAddProductModal', event => {
+                $('#addProductModal').modal('hide'); // Affiche la modale
+            });
+
+
 
             window.addEventListener('openEditShippingModal', event => {
                 $('#editShippingModal').modal('show'); // Affiche la modale
@@ -534,40 +545,12 @@
                 .then((result) => {
 
                     if (result.isConfirmed) {
-                        Livewire.dispatch('clientConfirmAction', {id: event.detail.id});
+                        Livewire.dispatch(event.detail.action, {id: event.detail.id});
                     } else {
                         Livewire.dispatch('makeActionCancel', {id: event.detail.id});
                     }
                 });
             })
-
-            //Confim before delete slider
-            window.addEventListener('sliderConfirm', (event) => {
-
-                Swal.fire({
-
-                    // icon: event.detail.type,
-                    title: event.detail.title,
-                    html: event.detail.message,
-                    showConfirmButton: true,
-                    showCancelButton: true,
-                    confirmButtonColor: '#33cc33',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Non',
-                    confirmButtonText: 'Oui'
-
-                })
-
-                .then((result) => {
-
-                    if (result.isConfirmed) {
-                        Livewire.dispatch('sliderConfirmAction', {id: event.detail.id});
-                    } else {
-                        Livewire.dispatch('makeActionCancel', {id: event.detail.id});
-                    }
-                });
-            })
-
 
 
         </script>

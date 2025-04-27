@@ -203,7 +203,7 @@
                                         @foreach (Cart::instance('cart')->content() as $product)
 
                                             <tr>
-                                                <td class="image product-thumbnail"><img src="{{ $product->model->image }}" alt="#"></td>
+                                                <td class="image product-thumbnail"><img src="{{ asset('admin/products/'.$product->model->image) }}" alt="#"></td>
                                                 <td>
                                                     <h5><a href="product-details.html">{{ $product->model->name }}</a> <span class="product-qty">x {{ $product->qty }}</span></h5>
                                                     <div>

@@ -22,7 +22,7 @@
                                         <div class="product-image-slider">
                                             @forelse ($productImages as $key => $productImage)
                                                 <figure class="border-radius-10">
-                                                    <img src="{{ asset($productImage) }}" alt="product image">
+                                                    <img src="{{ asset('admin/products/'.$productImage) }}" alt="product image">
                                                 </figure>
                                             @empty
 
@@ -32,7 +32,7 @@
                                         <div class="slider-nav-thumbnails pl-15 pr-15">
 
                                             @forelse ($productImages as $key => $productImage)
-                                                <div><img src="{{ asset($productImage) }}" alt="product image"></div>
+                                                <div><img src="{{ asset('admin/products/'.$productImage) }}" alt="product image"></div>
                                             @empty
 
                                             @endforelse
@@ -73,39 +73,18 @@
                                         <div class="short-desc mb-30">
                                             <p>{{ $product->short_description }}</p>
                                         </div>
-                                        <div class="attr-detail attr-color mb-15">
-                                            <strong class="mr-10">Couleur</strong>
-                                            <ul class="list-filter color-filter" wire:ignore>
-                                                @forelse (json_decode($product->color) as $color)
-                                                    <li><a data-color="{{ $color }}" wire:click.prevent="getProductColor('{{ $color }}')"><span class="product-color-{{ $color }}"></span></a></li>
-                                                @empty
-
-                                                @endforelse
-                                            </ul>
-                                        </div>
-                                        <div class="attr-detail attr-size">
-                                            <strong class="mr-10">Taille</strong>
-                                            <ul class="list-filter size-filter font-small" wire:ignore>
-                                                @forelse (json_decode($product->size) as $size)
-                                                    <li class="activee"><a wire:click.prevent="getProductSize('{{ $size }}')">{{ $size }}</a></li>
-                                                @empty
-
-                                                @endforelse
-                                            </ul>
-                                        </div>
                                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                         <div class="detail-extralink">
                                             <div class="detail-qty border radius">
-                                                <a class="qty-down" wire:click.prevent='decrement'><i class="fi-rs-angle-small-down"></i></a>
+                                                <a class="qty-down" wire:click='decrement'><i class="fi-rs-angle-small-down"></i></a>
                                                 <span class="qty-val">{{ $quantityProduct }}</span>
-                                                <a class="qty-up" wire:click.prevent='increment({{ $product->quantity }})'><i class="fi-rs-angle-small-up"></i></a>
+                                                <a class="qty-up" wire:click='increment({{ $product->quantity }})'><i class="fi-rs-angle-small-up"></i></a>
                                             </div>
                                             <div class="product-extra-link2">
                                                 <button type="button" class="button button-add-to-cart"
-                                                    wire:click.prevent="addToCart({{ $product->id }})"
+                                                    wire:click.prevent="addToCart('{{$product->id}}','{{ addslashes($product->name) }}', {{ $product->sale_price }})"
                                                     {{ $product->quantity == 0 ? 'disabled' : '' }}>
-                                                    {{ $product->quantity == 0 ? 'Rupture de stock' : 'Ajouter au panier' }}
-                                                </button>
+                                                    {{ $product->quantity == 0 ? 'Rupture de stock' : 'Ajouter au panier' }}</button>
 
                                                 @php
                                                     $item = Cart::instance('wishlist')->content()->pluck('id');
@@ -156,12 +135,12 @@
                                                     <div class="product-img-action-wrap">
                                                         <div class="product-img product-img-zoom">
                                                             <a href="{{ route('details', ['slug' => $relatedProduct->slug]) }}" tabindex="0">
-                                                                <img class="default-img" src="{{ asset($relatedProduct->image) }}" alt="">
+                                                                <img class="default-img" src="{{ asset('admin/products/'.$relatedProduct->image) }}" alt="">
                                                                 <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="product-action-1">
-                                                            <a aria-label="Apperçu Rapide" wire:click.prevent='showProductQuickViewModal({{ $relatedProduct->id }})' class="action-btn small hover-up"><i class="fi-rs-search"></i></a>
+                                                            <a aria-label="Apperçu Rapide" wire:click.prevent='showProductQuickViewModal({{ $relatedProduct->id }})' class="action-btn small hover-up" wire:nabigate><i class="fi-rs-search"></i></a>
                                                             @php
                                                                 $item = Cart::instance('wishlist')->content()->pluck('id');
                                                             @endphp
@@ -181,7 +160,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="product-content-wrap">
-                                                        <h2><a href="{{ route('details', ['slug' => $relatedProduct->slug]) }}" tabindex="0">{{ $relatedProduct->name }}</a></h2>
+                                                        <h2><a href="{{ route('details', ['slug' => $relatedProduct->slug]) }}" tabindex="0" wire:navigate>{{ $relatedProduct->name }}</a></h2>
                                                         <div class="rating-result" title="90%">
                                                             <span>
                                                             </span>
@@ -220,7 +199,7 @@
                             @forelse ($newProducts as $newProduct)
                                 <div class="single-post clearfix">
                                     <div class="image">
-                                        <img src="{{ asset($newProduct->image) }}" alt="#">
+                                        <img src="{{ asset('admin/products/'.$newProduct->image) }}" alt="#">
                                     </div>
                                     <div class="content pt-10">
                                         <h5><a href="{{ route('details', ['slug' => $newProduct->slug]) }}">{{ $newProduct->name }}</a></h5>

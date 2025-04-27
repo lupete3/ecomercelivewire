@@ -34,8 +34,8 @@ class SliderSeeder extends Seeder
                 'link' => 'http://ecommerce-livewire.test',
                 'offer' => $dataFaker->numberBetween(10,75),
                 'image' => $images[rand(0,1)],
-                'start_date' => '2025-02-25 10:22:46',
-                'end_date' => '2025-02-28 10:22:46',
+                'start_date' => '2026-02-25 10:22:46',
+                'end_date' => '2026-02-28 10:22:46',
                 'type' => 'slider',
                 'status' => 1,
             ]);

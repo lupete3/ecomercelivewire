@@ -155,14 +155,13 @@ class CheckoutComponent extends Component
             type: $type,
             title: $title,
             message: $message,
-            id: $this->idShippingAdress
+            id: $this->idShippingAdress,
+            action: 'adressAction'
         );
-
 
     }
 
-
-    #[On('clientConfirmAction')]
+    #[On('adressAction')]
     public function deleteShippingAdress($id)
     {
         $this->idShippingAdress = $id;

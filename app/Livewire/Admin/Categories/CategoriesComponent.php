@@ -10,6 +10,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Livewire\Attributes\On;
 
 class CategoriesComponent extends Component
 {
@@ -130,6 +131,41 @@ class CategoriesComponent extends Component
         $this->hideAddCategoryModal();
 
         flash()->success('Catégorie mise à jour.');
+    }
+
+    public function sendConfirm($idCategory, $type, $message, $title)
+    {
+        $this->idCategory = $idCategory;
+
+        $this->dispatch('clientConfirm',
+            type: $type,
+            title: $title,
+            message: $message,
+            id: $this->idCategory,
+            action: 'categoryAction'
+
+        );
+
+    }
+
+    #[On('categoryAction')]
+    public function destroy($id)
+    {
+        $this->idCategory = $id;
+        $category = Category::find($this->idCategory);
+
+        if ($this->image) {
+            if ($category->image) {
+                $imagePath = public_path('admin/category/' . $category->image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        }
+
+        $category->delete();
+        flash()->success('Catégorie supprimée.');
+
     }
 
     public function deleteCategory($id)

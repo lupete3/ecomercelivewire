@@ -53,36 +53,15 @@ class DetailsComponent extends Component
         $this->slug = $slug;
     }
 
-    public function getProductColor($productColor)
+    public function addToCart($productId, $productName, $productSalePrice)
     {
-        $this->productColor = $productColor;
-    }
-
-    public function getProductSize($productSize)
-    {
-        $this->productSize = $productSize;
-    }
-
-    public function addToCart($productId)
-    {
-        $product = Product::findOrFail($productId);
-
         $cart = Cart::instance('cart')
-            ->add(
-                $product->id,
-                $product->name,
-                $this->quantityProduct,
-                $product->sale_price,
-                [
-                    'color' => $this->productColor,
-                    'size' => $this->productSize
-                ]
-            )->associate(Product::class);
+            ->add($productId, $productName, $this->quantityProduct, $productSalePrice)
+            ->associate(Product::class);
 
         $this->dispatch('refreshComponent');
-        flash()->success('Le produit a été ajouté au panier.');
+        flash()->success('Le produit ajouté au panier.');
     }
-
 
     public function addToCartQuickView($productId, $productName, $productSalePrice)
     {
@@ -172,9 +151,4 @@ class DetailsComponent extends Component
         ]);
     }
 
-    #[On('refreshComponent')]
-    public function refreshComponent()
-    {
-        return redirect()->back();
-    }
 }
