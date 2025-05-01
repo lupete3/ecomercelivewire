@@ -25,6 +25,7 @@ use App\Livewire\HomeComponent;
 use App\Livewire\ShopComponent;
 use App\Livewire\CategoryComponent;
 use App\Livewire\ContactComponent;
+use App\Livewire\NoteManager;
 use App\Livewire\PromotionsComponent;
 use App\Livewire\SearchComponent;
 use App\Livewire\ThankyouComponent;
@@ -43,6 +44,11 @@ Route::get('/promotions', PromotionsComponent::class)->name('promotions');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 // Route::get('/categories', CategoriesComponent::class)->name('categories.index');
+Route::get('/note', NoteManager::class)->name('note');
+Route::post('/set-locale', function () {
+    session(['locale' => request('locale')]);
+    return back();
+})->name('set-locale');
 
 
 Route::get('/dashboard', function () {

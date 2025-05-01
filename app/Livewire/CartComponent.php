@@ -18,6 +18,12 @@ class CartComponent extends Component
     public $subtotalAfterDiscount;
     public $taxAfterDiscount;
     public $totalAfterDiscount;
+    public $locale;
+
+    public function mount()
+    {
+        $this->locale = session('locale', config('app.locale'));
+    }
 
 
     public function addQuantityToCart($cartId)

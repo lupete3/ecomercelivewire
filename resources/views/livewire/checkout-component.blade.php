@@ -115,171 +115,152 @@
         <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
-                    <a href="{{ route('home') }}" rel="nofollow">Accueil</a>
-                    <span></span> Boutique
-                    <span></span> Paiement
+                    <a href="{{ route('home') }}" rel="nofollow" wire:navigate>{{ Lang::get('messages.home', [], $locale) }}</a>
+                    <span></span> {{ Lang::get('messages.shop', [], $locale) }}
+                    <span></span> {{ Lang::get('messages.payment', [], $locale) }}
                 </div>
             </div>
         </div>
         <section class="mt-50 mb-50">
             <div class="container">
                 <form method="post" wire:submit.prevent='placeOrder'>
-                @method('POST')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-25 d-flex justify-content-between">
-                            <h4>Adresse de livraison</h4>
-                            {{-- <button class="btn btn-fill-out btn-block btn-sm " data-bs-toggle="modal" data-bs-target="#quickViewModal">Ajouter une adresse</button> --}}
-                            <button class="btn btn-fill-out btn-block btn-sm btn-warning" wire:click='showAddShippingModal'>Ajouter une adresse</button>
-                        </div>
-
-                        <div class="row mb-20">
-                            <div class="col-lg-12">
-                                @forelse ($shippingAdresses as $shippingAdresse)
-
-                                    <div class="toggle_info mt-2">
-
-                                        <div class="row d-flex align-items-center">
-                                            <div class="col-md-3">
-                                                <!-- From Uiverse.io by Yaya12085 -->
-                                                <div class="radio-inputs" wire:click='applyShippingAdress("{{ $shippingAdresse->city }}")'>
-
-                                                    <label>
-                                                        <input class="radio-input" type="radio" name="adress_type" value="{{ $shippingAdresse->adress_type }}" wire:model='adress_type'>
-                                                        <span class="radio-tile">
-                                                            <span class="radio-icon">
-                                                                <i class="fi-rs-home" style="font-size:30px"></i>
+                    @method('POST')
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-25 d-flex justify-content-between">
+                                <h4>{{ Lang::get('messages.shipping_address', [], $locale) }}</h4>
+                                <button type="button" class="btn btn-fill-out btn-block btn-sm btn-warning" wire:click='showAddShippingModal'>
+                                    {{ Lang::get('messages.add_address', [], $locale) }}
+                                </button>
+                            </div>
+                            <div class="row mb-20">
+                                <div class="col-lg-12">
+                                    @forelse ($shippingAdresses as $shippingAdresse)
+                                        <div class="toggle_info mt-2">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-md-3">
+                                                    <!-- From Uiverse.io by Yaya12085 -->
+                                                    <div class="radio-inputs" wire:click='applyShippingAdress("{{ $shippingAdresse->city }}")'>
+                                                        <label>
+                                                            <input class="radio-input" type="radio" name="adress_type" value="{{ $shippingAdresse->adress_type }}" wire:model='adress_type'>
+                                                            <span class="radio-tile">
+                                                                <span class="radio-icon">
+                                                                    <i class="fi-rs-home" style="font-size:30px"></i>
+                                                                </span>
+                                                                <span class="radio-label">{{ $shippingAdresse->adress_type }}</span>
                                                             </span>
-                                                            <span class="radio-label">{{ $shippingAdresse->adress_type }}</span>
-                                                        </span>
-                                                    </label>
+                                                        </label>
+                                                    </div>
                                                 </div>
-
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Type d'adresse : {{ $shippingAdresse->adress_type }}</p>
-                                                <p>Nom : {{ $shippingAdresse->name }}</p>
-                                                <p>Email : {{ $shippingAdresse->email }}</p>
-                                                <p>Téléphone : {{ $shippingAdresse->phone }}</p>
-                                                <p>Ville : {{ $shippingAdresse->city }}</p>
-                                                <p>Adresse : {{ $shippingAdresse->adress }}</p>
-                                            </div>
-                                            <div class="col-md-3 text-center text-danger">
-                                                <a href="" wire:click.prevent='showEditShippingModal({{ $shippingAdresse->id }})'><i class="fi-rs-pencil mr-10" style="font-size: 16px"></i></a>
-                                                <a href="" wire:click.prevent='sendConfirm({{ $shippingAdresse->id }}, "warning", "Voulez-vous supprimer cette adresse", "Supprimer")'><i class="fi-rs-trash" style="font-size: 16px"></i></a>
+                                                <div class="col-md-6">
+                                                    <p>{{ Lang::get('messages.address_type', [], $locale) }} : {{ $shippingAdresse->adress_type }}</p>
+                                                    <p>{{ Lang::get('messages.name', [], $locale) }} : {{ $shippingAdresse->name }}</p>
+                                                    <p>{{ Lang::get('messages.email', [], $locale) }} : {{ $shippingAdresse->email }}</p>
+                                                    <p>{{ Lang::get('messages.phone', [], $locale) }} : {{ $shippingAdresse->phone }}</p>
+                                                    <p>{{ Lang::get('messages.country', [], $locale) }} : {{ $shippingAdresse->city }}</p>
+                                                    <p>{{ Lang::get('messages.address', [], $locale) }} : {{ $shippingAdresse->adress }}</p>
+                                                </div>
+                                                <div class="col-md-3 text-center text-danger">
+                                                    {{-- <a href="" wire:click.prevent='showEditShippingModal({{ $shippingAdresse->id }})'>
+                                                        <i class="fi-rs-pencil mr-10" style="font-size: 16px"></i></a> --}}
+                                                    <a href="" wire:click.prevent='sendConfirm({{ $shippingAdresse->id }}, "warning", "{{ Lang::get('messages.delete_confirmation', [], $locale) }}", "{{ Lang::get('messages.delete', [], $locale) }}")'>
+                                                        <i class="fi-rs-trash" style="font-size: 16px"></i></a>
+                                                </div>
                                             </div>
                                         </div>
-
-                                    </div>
-
-                                @empty
-
-                                @endforelse
+                                    @empty
+                                    @endforelse
+                                </div>
                             </div>
-                        </div>
-
                             <div class="mb-20">
-                                <h5>Informations supplémentaires</h5>
+                                <h5>{{ Lang::get('messages.additional_info', [], $locale) }}</h5>
                             </div>
                             <div class="form-group mb-30">
-                                <textarea rows="5" placeholder="Order notes" wire:model='additional_onfo'></textarea>
+                                <textarea rows="5" placeholder="{{ Lang::get('messages.order_notes', [], $locale) }}" wire:model='additional_onfo'></textarea>
                             </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="order_review">
-                            <div class="mb-20">
-                                <h4>Votre commande</h4>
-                            </div>
-                            <div class="table-responsive order_table text-center">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2">Produits</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (Cart::instance('cart')->content() as $product)
-
+                        </div>
+                        <div class="col-md-6">
+                            <div class="order_review">
+                                <div class="mb-20">
+                                    <h4>{{ Lang::get('messages.your_order', [], $locale) }}</h4>
+                                </div>
+                                <div class="table-responsive order_table text-center">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td class="image product-thumbnail"><img src="{{ asset('admin/products/'.$product->model->image) }}" alt="#"></td>
-                                                <td>
-                                                    <h5><a href="product-details.html">{{ $product->model->name }}</a> <span class="product-qty">x {{ $product->qty }}</span></h5>
-                                                    <div>
-                                                        @if ($product->options->color)
-                                                        <span class="text-muted">Couleur : {{ ucwords($product->options->color) }}</span>
-                                                        @endif
-                                                        @if ($product->options->size)
-                                                        <span class="text-muted">Taille : {{ $product->options->size }}</span>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>${{ $product->model->sale_price }}</td>
+                                                <th colspan="2">{{ Lang::get('messages.products', [], $locale) }}</th>
+                                                <th>{{ Lang::get('messages.total', [], $locale) }}</th>
                                             </tr>
-
-                                        @endforeach
-                                        @if (session()->has('coupon'))
-                                            <tr>
-                                                <th>Sous-total</th>
-                                                <td class="product-subtotal" colspan="2">${{ number_format(Cart::instance('cart')->subtotal(), 2) }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Réduction</th>
-                                                <td class="product-subtotal" colspan="2">-${{ number_format($discount, 2) }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Sous-total après réduction</th>
-                                                <td class="product-subtotal" colspan="2">${{ number_format($subtotalAfterDiscount, 2) }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Livraison</th>
-                                                <td colspan="2"><em>${{ $this->shippingCost }}</em></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Total</th>
-                                                <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">${{ number_format($totalAfterDiscount + $this->shippingCost, 2) }}</span></td>
-                                            </tr>
-                                        @else
-
-                                            <tr>
-                                                <th>Sous-total</th>
-                                                <td class="product-subtotal" colspan="2">${{ Cart::instance('cart')->subtotal() }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Livraison</th>
-                                                <td colspan="2"><em>${{ number_format($this->shippingCost, 2) }}</em></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Total</th>
-                                                <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">${{ Cart::instance('cart')->total() + $this->shippingCost }}</span></td>
-                                            </tr>
-
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (Cart::instance('cart')->content() as $product)
+                                                <tr>
+                                                    <td class="image product-thumbnail"><img src="{{ asset('admin/products/'.$product->model->image) }}" alt="#"></td>
+                                                    <td>
+                                                        <h5><a href="product-details.html">{{ $product->model->name }}</a> <span class="product-qty">x {{ $product->qty }}</span></h5>
+                                                        <div>
+                                                            @if ($product->options->color)
+                                                            <span class="text-muted">{{ Lang::get('messages.color', [], $locale) }} : {{ ucwords($product->options->color) }}</span>
+                                                            @endif
+                                                            @if ($product->options->size)
+                                                            <span class="text-muted">{{ Lang::get('messages.size', [], $locale) }} : {{ $product->options->size }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td>${{ $product->model->sale_price }}</td>
+                                                </tr>
+                                            @endforeach
+                                            @if (session()->has('coupon'))
+                                                <tr>
+                                                    <th>{{ Lang::get('messages.subtotal', [], $locale) }}</th>
+                                                    <td class="product-subtotal" colspan="2">${{ number_format(Cart::instance('cart')->subtotal(), 2) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ Lang::get('messages.discount', [], $locale) }}</th>
+                                                    <td class="product-subtotal" colspan="2">-${{ number_format($discount, 2) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ Lang::get('messages.subtotal_after_discount', [], $locale) }}</th>
+                                                    <td class="product-subtotal" colspan="2">${{ number_format($subtotalAfterDiscount, 2) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ Lang::get('messages.shipping', [], $locale) }}</th>
+                                                    <td colspan="2"><em>${{ $this->shippingCost }}</em></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ Lang::get('messages.total', [], $locale) }}</th>
+                                                    <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">${{ number_format($totalAfterDiscount + $this->shippingCost, 2) }}</span></td>
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <th>{{ Lang::get('messages.subtotal', [], $locale) }}</th>
+                                                    <td class="product-subtotal" colspan="2">${{ Cart::instance('cart')->subtotal() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ Lang::get('messages.shipping', [], $locale) }}</th>
+                                                    <td colspan="2"><em>${{ number_format($this->shippingCost, 2) }}</em></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ Lang::get('messages.total', [], $locale) }}</th>
+                                                    <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">${{ Cart::instance('cart')->total() + $this->shippingCost }}</span></td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
                             <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                             <div class="payment_method">
                                 <div class="mb-25">
-                                    <h5>Paiement</h5>
+                                    <h5>{{ Lang::get('messages.payment', [], $locale) }}</h5>
                                 </div>
                                 <div class="icheck-material-orange icheck-inline">
                                     <input type="radio" id="someRadioId1" name="someGroupName" value="cash" wire:ignore wire:model='paymentType' />
-                                    <label for="someRadioId1">Après livraison</label>
-                                </div>
-                                <div class="icheck-material-orange icheck-inline">
-                                    <input type="radio" id="someRadioId2" name="someGroupName" value="card" wire:ignore wire:model='paymentType' />
-                                    <label for="someRadioId2">Carte bancaire</label>
-                                </div>
-                                <div class="icheck-material-orange icheck-inline">
-                                    <input type="radio" id="someRadioId3" name="someGroupName" value="paypal" wire:ignore wire:model='paymentType' />
-                                    <label for="someRadioId3">Paypal</label>
+                                    <label for="someRadioId1">{{ Lang::get('messages.cash_on_delivery', [], $locale) }}</label>
                                 </div>
 
                             </div>
                             @error('paymentType') <span class="text-danger text-center">{{ $message }}</span> @enderror <br>
-                            <button type="submit" class="btn btn-fill-out btn-block mt-30">Passer Commande</button>
+                            <button type="submit" class="btn btn-fill-out btn-block mt-30">{{ Lang::get('messages.place_order', [], $locale) }}</button>
                         </div>
                     </div>
                 </div>
@@ -290,7 +271,7 @@
             @include('livewire.partials.shipping.add-shipping-modal')
 
             <!-- Edit Shipping Adress Model-->
-            @include('livewire.partials.shipping.edit-shipping-modal')
+            {{-- @include('livewire.partials.shipping.edit-shipping-modal') --}}
 
         </section>
     </main>

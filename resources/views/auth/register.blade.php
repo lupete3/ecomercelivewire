@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $locale = session('locale', config('app.locale'));
+    @endphp
     <main class="main">
         <section class="pt-20 pb-20">
             <div class="container">
@@ -14,20 +17,20 @@
                                 <div class="login_wrap widget-taber-content p-30 background-white border-radius-5">
                                     <div class="padding_eight_all bg-white">
                                         <div class="heading_s1">
-                                            <h3 class="mb-30">Créer un compte</h3>
+                                            <h3 class="mb-30">{{ Lang::get('messages.create_account', [], $locale) }}</h3>
                                         </div>
                                         <form method="POST" action="{{ route('register') }}">
                                             @csrf
                                             <div class="form-group">
-                                                <input type="text" required="" name="name" placeholder="Nom" value="{{ old('name') }}" required autofocus>
+                                                <input type="text" required="" name="name" placeholder="{{ Lang::get('messages.name', [], $locale) }}" value="{{ old('name') }}" required autofocus>
                                                 <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="form-group">
-                                                <input type="number" required="" name="phone" placeholder="Téléphone" value="{{ old('phone') }}" required>
+                                                <input type="number" required="" name="phone" placeholder="{{ Lang::get('messages.phone', [], $locale) }}" value="{{ old('phone') }}" required>
                                                 <x-input-error :messages="$errors->get('phone')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="form-group">
-                                                <input type="email" required="" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                                                <input type="email" required="" name="email" placeholder="{{ Lang::get('messages.email', [], $locale) }}" value="{{ old('email') }}" required>
                                                 <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                             </div>
                                             <style>
@@ -44,34 +47,42 @@
                                                 }
                                             </style>
                                             <div class="form-group position-relative">
-                                                <input required="" type="password" name="password" id="password" placeholder="Mot de passe" class="pr-4">
+                                                <input required="" type="password" name="password" id="password" placeholder="{{ Lang::get('messages.password', [], $locale) }}" class="pr-4">
                                                 <span class="password-toggle-icon" onclick="togglePasswordVisibility()">
                                                     <i class="fi-rs-eye"></i>
                                                 </span>
                                                 <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="form-group">
-                                                <input required="" type="password" name="password_confirmation" placeholder="Confirmer le mot de passe" required>
+                                                <input required="" type="password" name="password_confirmation" placeholder="{{ Lang::get('messages.confirm_password', [], $locale) }}" required>
                                                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="login_footer form-group">
                                                 <div class="chek-form">
                                                     <div class="custome-checkbox">
                                                         <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox12" value="">
-                                                        <label class="form-check-label" for="exampleCheckbox12"><span>Accepter les termes &amp; Policy.</span></label>
+                                                        <label class="form-check-label" for="exampleCheckbox12">
+                                                            <span>{{ Lang::get('messages.accept_terms', [], $locale) }}</span>
+                                                        </label>
                                                     </div>
                                                 </div>
-                                                <a href="privacy-policy.html"><i class="fi-rs-book-alt mr-5 text-muted"></i>En savoir plus</a>
+                                                <a href="privacy-policy.html">
+                                                    <i class="fi-rs-book-alt mr-5 text-muted"></i>{{ Lang::get('messages.learn_more', [], $locale) }}
+                                                </a>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Enregistrer</button>
+                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">
+                                                    {{ Lang::get('messages.register_button', [], $locale) }}
+                                                </button>
                                             </div>
                                         </form>
-                                        <div class="text-muted text-center">Avez-vous déjà un compte? <a href="{{ route('login') }}">Se connecter maintenant</a></div>
+                                        <div class="text-muted text-center">
+                                            {{ Lang::get('messages.already_have_account', [], $locale) }}
+                                            <a href="{{ route('login') }}">{{ Lang::get('messages.login_now', [], $locale) }}</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

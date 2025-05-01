@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => Admin::class,
             'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+            'local' => SetLocale::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

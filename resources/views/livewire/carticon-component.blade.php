@@ -29,12 +29,19 @@
                 @endforelse
             </ul>
             <div class="shopping-cart-footer">
-                 <div class="shopping-cart-total">
-                    <h4>Total <span>${{ Cart::total() }}</span></h4>
+                <div class="shopping-cart-total">
+                    <!-- Traduction du texte "Total" -->
+                    <h4>{{ Lang::get('messages.total', [], $locale) }} <span>${{ Cart::total() }}</span></h4>
                 </div>
                 <div class="shopping-cart-button">
-                    <a href="{{ route('cart') }}" class="outline" wire:navigate>Affichier le panier</a>
-                    <a href="{{ route('checkout') }}" wire:navigate>Payer</a>
+                    <!-- Traduction du texte "Afficher le panier" -->
+                    <a href="{{ route('cart') }}" class="outline" wire:navigate>
+                        {{ Lang::get('messages.view_cart', [], $locale) }}
+                    </a>
+                    <!-- Traduction du texte "Payer" -->
+                    <a href="{{ route('checkout') }}" wire:navigate>
+                        {{ Lang::get('messages.checkout', [], $locale) }}
+                    </a>
                 </div>
             </div>
         </div>

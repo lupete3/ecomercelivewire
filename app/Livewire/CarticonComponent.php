@@ -10,6 +10,12 @@ use Livewire\Attributes\On;
 
 class CarticonComponent extends Component
 {
+    public $locale;
+
+    public function mount()
+    {
+        $this->locale = session('locale', config('app.locale'));
+    }
 
     public function removeToCart($cartId)
     {

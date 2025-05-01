@@ -2,8 +2,8 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow">Home</a>
-                <span></span> Contact us
+                <a href="{{ route('home') }}" rel="nofollow"  wire:navigate>{{ Lang::get('Home', [], $locale) }}</a>
+                <span></span> {{ Lang::get('messages.contact_us', [], $locale) }}
             </div>
         </div>
     </div>

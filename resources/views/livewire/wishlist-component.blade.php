@@ -2,8 +2,8 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="{{ route('home') }}" rel="nofollow"  wire:navigate>Accueil</a>
-                <span></span> Favoris
+                <a href="{{ route('home') }}" rel="nofollow"  wire:navigate>{{ Lang::get('Home', [], $locale) }}</a>
+                <span></span> {{ Lang::get('messages.wishlist', [], $locale) }}
             </div>
         </div>
     </div>
@@ -13,47 +13,10 @@
                 <div class="col-lg-12">
                     <div class="shop-product-fillter">
                         <div class="totall-product">
-                            <p> Nous trouvons <strong class="text-brand">{{ Cart::instance('wishlist')->count() }}</strong> produits pour vous!</p>
+                            <p>
+                                {{ str_replace(':count', {{ Cart::instance('wishlist')->count() }}, Lang::get('messages.found_products', [], $locale)) }}
+                            </p>
                         </div>
-                        {{-- <div class="sort-by-product-area">
-                            <div class="sort-by-cover mr-10">
-                                <div class="sort-by-product-wrap">
-                                    <div class="sort-by">
-                                        <span><i class="fi-rs-apps"></i>Voir:</span>
-                                    </div>
-                                    <div class="sort-by-dropdown-wrap">
-                                        <span> {{ $productPerPage }} <i class="fi-rs-angle-small-down"></i></span>
-                                    </div>
-                                </div>
-                                <div class="sort-by-dropdown">
-                                    <ul>
-                                        <li><a class="{{ $productPerPage == 12 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(0)'>12</a></li>
-                                        <li><a class="{{ $productPerPage == 24 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(24)'>24</a></li>
-                                        <li><a class="{{ $productPerPage == 36 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(36)'>36</a></li>
-                                        <li><a class="{{ $productPerPage == 48 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(48)'>48</a></li>
-                                        <li><a class="{{ $productPerPage == 60 ? 'active' : '' }}" wire:click.prevent='changeProductPerPage(60)'>60</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="sort-by-cover">
-                                <div class="sort-by-product-wrap">
-                                    <div class="sort-by">
-                                        <span><i class="fi-rs-apps-sort"></i>Tri par:</span>
-                                    </div>
-                                    <div class="sort-by-dropdown-wrap">
-                                        <span> {{ $shortProductBy }} <i class="fi-rs-angle-small-down"></i></span>
-                                    </div>
-                                </div>
-                                <div class="sort-by-dropdown">
-                                    <ul>
-                                        <li><a class="{{ $shortProductBy == 'Defaut' ? 'active' : '' }}" wire:click.prevent="changeShortBy('Defaut')">Défaut</a></li>
-                                        <li><a class="{{ $shortProductBy == 'Bas a Haut' ? 'active' : '' }}" wire:click.prevent="changeShortBy('Bas a Haut')">Prix: Bas à Haut</a></li>
-                                        <li><a class="{{ $shortProductBy == 'Haut en Bas' ? 'active' : '' }}" wire:click.prevent="changeShortBy('Haut en Bas')">Prix: Haut en Bas</a></li>
-                                        <li><a class="{{ $shortProductBy == 'Nouveaux Produits' ? 'active' : '' }}" wire:click.prevent="changeShortBy('Nouveaux Produits')">Nouveauté des produits</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                     <div class="row product-grid-3">
                         @forelse (Cart::instance('wishlist')->content() as $product)
@@ -63,8 +26,8 @@
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
                                             <a href="{{ route('details', ['slug' => $product->model->slug]) }}"  wire:navigate>
-                                                <img class="default-img" src="{{ $product->model->image }}" alt="">
-                                                <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
+                                                <img class="default-img" src="{{ 'admin/products/'.$product->model->image }}" alt="">
+                                                <img class="hover-img" src="{{ 'admin/products/'.$product->model->image }}" alt="">
                                             </a>
                                         </div>
                                         <div class="product-badges product-badges-position product-badges-mrg">
@@ -82,7 +45,10 @@
                                             </span>
                                         </div>
                                         <div class="product-price">
-                                            <span>${{ $product->model->sale_price }} </span>
+                                            @php
+                                                $adjustedPrice = $this->getAdjustedPrice($product->model);
+                                            @endphp
+                                            <span>${{ ${{ number_format($adjustedPrice, 2) }} }} </span>
                                             <span class="old-price">${{ $product->model->regular_price }}</span>
                                         </div>
                                         <div class="product-action-1 show">

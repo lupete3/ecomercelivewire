@@ -106,14 +106,20 @@
     </style>
     <div class="content mb-50">
         <div class="wrapper-1">
-        <div class="wrapper-2">
-            <h1 class="text-warning">Merci!</h1>
-            <h4>Génial! Votre commande a été envoyé avec succès.
-            <br>Votre paiement est en cours de traitement.</h4>
-            <p style="margin-bottom: 10px">Votre commande est #{{ $order->id }}. <br> Nous vous remercions d'avoir acheté dans notre magasin. Pour tout contact, vueillez nous écrire à cette adresse <a href="mailto:contact@pmarquet.com">contact@pmarquet.com</a>. Espérons vous retrouver à la prochaine</p>
+            <div class="wrapper-2">
+                <h1 class="text-warning">{{ Lang::get('messages.thank_you', [], $locale) }}</h1>
+                <h4>
+                    {{ Lang::get('messages.order_success_title', [], $locale) }}
+                    <br>{{ Lang::get('messages.order_processing', [], $locale) }}
+                </h4>
+                <p style="margin-bottom: 10px">
+                    {!! Lang::get('messages.order_details', ['order_id' => $order->id], $locale) !!}
+                </p>
 
-            <a class="go-home btn btn-warning" href="{{ route('home') }}" style="margin-top: 30px !important">Retour à l'accueil</a>
-        </div>
+                <a class="go-home btn btn-warning" href="{{ route('home') }}" style="margin-top: 30px !important">
+                    {{ Lang::get('messages.back_to_home', [], $locale) }}
+                </a>
+            </div>
         </div>
     </div>
 

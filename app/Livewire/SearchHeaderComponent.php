@@ -8,8 +8,11 @@ class SearchHeaderComponent extends Component
 {
     public $search;
 
+    public $locale;
+
     public function mount()
     {
+        $this->locale = session('locale', config('app.locale'));
         $this->fill(request()->only('search'));
     }
 

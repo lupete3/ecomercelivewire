@@ -58,13 +58,16 @@
                     </div>
                     <div class="form-group">
                         <select name="" wire:model='city' id="" class="form-control">
-                            <option value="">Choisir votre ville</option>
-                            <option value="Bukavu">Bukavu</option>
-                            <option value="Goma">Goma</option>
-                            <option value="Kamituga">Kamituga</option>
-                            <option value="Uvira">Uvira</option>
-                            <option value="Lubumbashi">Lubumbashi</option>
+                            @foreach ($city as $fr => $en)
+                                @php
+                                    $value = $locale === 'fr' ? $city[$fr] : $city[$en];
+                                @endphp
+                                <option value="{{ $value }}" {{ $value == $newCity ? 'selected' : '' }}>
+                                    {{ $value }}
+                                </option>
+                            @endforeach
                         </select>
+
                         @error('city') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">

@@ -78,10 +78,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($order->orederItems as $item)
+                @foreach ($order->orderItems as $item)
                     <tr>
                         <td data-label="#">{{ $loop->index + 1 }}</td>
-                        <td data-label="Image"><img src="{{ $item->product->image }}" style="width: 50px"></td>
+                        <td data-label="Image"><img src="{{ asset('admin/products/'.$item->product->image) }}" style="width: 50px"></td>
                         <td data-label="Article">{{ $item->product->name }}</td>
                         <td data-label="Quantité">{{ $item->quantity}} Pc</td>
                         <td data-label="Prix unitaire">${{ $item->price }}</td>

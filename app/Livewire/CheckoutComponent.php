@@ -22,8 +22,9 @@ class CheckoutComponent extends Component
     public $name;
     public $phone;
     public $email;
-    public $city;
+    public $city = [];
     public $adress;
+    public $newCity;
 
     public $idShippingAdress;
 
@@ -34,11 +35,217 @@ class CheckoutComponent extends Component
 
     public $shippingCost= 0;
     public $additional_onfo;
-    public $paymentType;
+    public $paymentType = 'cash';
 
     public $thankyou;
+    public $locale;
+
 
     protected $listeners = ['deleteConfirmed', 'refreshComponent' => '$refresh'];
+
+    public function mount()
+    {
+        $this->locale = session('locale', config('app.locale'));
+        $this->city = [
+            "Afghanistan" => "Afghanistan",
+            "Afrique du Sud" => "South Africa",
+            "Albanie" => "Albania",
+            "Algérie" => "Algeria",
+            "Allemagne" => "Germany",
+            "Andorre" => "Andorra",
+            "Angola" => "Angola",
+            "Antigua-et-Barbuda" => "Antigua and Barbuda",
+            "Arabie saoudite" => "Saudi Arabia",
+            "Argentine" => "Argentina",
+            "Arménie" => "Armenia",
+            "Australie" => "Australia",
+            "Autriche" => "Austria",
+            "Azerbaïdjan" => "Azerbaijan",
+            "Bahamas" => "Bahamas",
+            "Bahreïn" => "Bahrain",
+            "Bangladesh" => "Bangladesh",
+            "Barbade" => "Barbados",
+            "Belgique" => "Belgium",
+            "Belize" => "Belize",
+            "Bénin" => "Benin",
+            "Bhoutan" => "Bhutan",
+            "Biélorussie" => "Belarus",
+            "Birmanie" => "Myanmar (Burma)",
+            "Bolivie" => "Bolivia",
+            "Bosnie-Herzégovine" => "Bosnia and Herzegovina",
+            "Botswana" => "Botswana",
+            "Brésil" => "Brazil",
+            "Brunei" => "Brunei",
+            "Bulgarie" => "Bulgaria",
+            "Burkina Faso" => "Burkina Faso",
+            "Burundi" => "Burundi",
+            "Cambodge" => "Cambodia",
+            "Cameroun" => "Cameroon",
+            "Canada" => "Canada",
+            "Cap-Vert" => "Cape Verde",
+            "Chili" => "Chile",
+            "Chine" => "China",
+            "Chypre" => "Cyprus",
+            "Colombie" => "Colombia",
+            "Comores" => "Comoros",
+            "Congo (République démocratique du)" => "Democratic Republic of the Congo",
+            "Congo (République du)" => "Republic of the Congo",
+            "Corée du Nord" => "North Korea",
+            "Corée du Sud" => "South Korea",
+            "Costa Rica" => "Costa Rica",
+            "Côte d'Ivoire" => "Ivory Coast",
+            "Croatie" => "Croatia",
+            "Cuba" => "Cuba",
+            "Danemark" => "Denmark",
+            "Djibouti" => "Djibouti",
+            "Dominique" => "Dominica",
+            "Égypte" => "Egypt",
+            "Émirats arabes unis" => "United Arab Emirates",
+            "Équateur" => "Ecuador",
+            "Érythrée" => "Eritrea",
+            "Espagne" => "Spain",
+            "Estonie" => "Estonia",
+            "Eswatini" => "Eswatini (Swaziland)",
+            "États-Unis" => "United States",
+            "Éthiopie" => "Ethiopia",
+            "Fidji" => "Fiji",
+            "Finlande" => "Finland",
+            "France" => "France",
+            "Gabon" => "Gabon",
+            "Gambie" => "Gambia",
+            "Géorgie" => "Georgia",
+            "Ghana" => "Ghana",
+            "Grèce" => "Greece",
+            "Grenade" => "Grenada",
+            "Guatemala" => "Guatemala",
+            "Guinée" => "Guinea",
+            "Guinée équatoriale" => "Equatorial Guinea",
+            "Guinée-Bissau" => "Guinea-Bissau",
+            "Guyana" => "Guyana",
+            "Haïti" => "Haiti",
+            "Honduras" => "Honduras",
+            "Hongrie" => "Hungary",
+            "Îles Marshall" => "Marshall Islands",
+            "Îles Salomon" => "Solomon Islands",
+            "Inde" => "India",
+            "Indonésie" => "Indonesia",
+            "Irak" => "Iraq",
+            "Iran" => "Iran",
+            "Irlande" => "Ireland",
+            "Islande" => "Iceland",
+            "Israël" => "Israel",
+            "Italie" => "Italy",
+            "Jamaïque" => "Jamaica",
+            "Japon" => "Japan",
+            "Jordanie" => "Jordan",
+            "Kazakhstan" => "Kazakhstan",
+            "Kenya" => "Kenya",
+            "Kirghizistan" => "Kyrgyzstan",
+            "Kiribati" => "Kiribati",
+            "Kosovo" => "Kosovo",
+            "Koweït" => "Kuwait",
+            "Laos" => "Laos",
+            "Lesotho" => "Lesotho",
+            "Lettonie" => "Latvia",
+            "Liban" => "Lebanon",
+            "Liberia" => "Liberia",
+            "Libye" => "Libya",
+            "Liechtenstein" => "Liechtenstein",
+            "Lituanie" => "Lithuania",
+            "Luxembourg" => "Luxembourg",
+            "Macédoine du Nord" => "North Macedonia",
+            "Madagascar" => "Madagascar",
+            "Malaisie" => "Malaysia",
+            "Malawi" => "Malawi",
+            "Maldives" => "Maldives",
+            "Mali" => "Mali",
+            "Malte" => "Malta",
+            "Maroc" => "Morocco",
+            "Maurice" => "Mauritius",
+            "Mauritanie" => "Mauritania",
+            "Mexique" => "Mexico",
+            "Micronésie" => "Micronesia",
+            "Moldavie" => "Moldova",
+            "Monaco" => "Monaco",
+            "Mongolie" => "Mongolia",
+            "Monténégro" => "Montenegro",
+            "Mozambique" => "Mozambique",
+            "Namibie" => "Namibia",
+            "Nauru" => "Nauru",
+            "Népal" => "Nepal",
+            "Nicaragua" => "Nicaragua",
+            "Niger" => "Niger",
+            "Nigeria" => "Nigeria",
+            "Norvège" => "Norway",
+            "Nouvelle-Zélande" => "New Zealand",
+            "Oman" => "Oman",
+            "Ouganda" => "Uganda",
+            "Ouzbékistan" => "Uzbekistan",
+            "Pakistan" => "Pakistan",
+            "Palaos" => "Palau",
+            "Palestine" => "Palestine",
+            "Panama" => "Panama",
+            "Papouasie-Nouvelle-Guinée" => "Papua New Guinea",
+            "Paraguay" => "Paraguay",
+            "Pays-Bas" => "Netherlands",
+            "Pérou" => "Peru",
+            "Philippines" => "Philippines",
+            "Pologne" => "Poland",
+            "Portugal" => "Portugal",
+            "Qatar" => "Qatar",
+            "République centrafricaine" => "Central African Republic",
+            "République dominicaine" => "Dominican Republic",
+            "République tchèque" => "Czech Republic",
+            "Roumanie" => "Romania",
+            "Royaume-Uni" => "United Kingdom",
+            "Russie" => "Russia",
+            "Rwanda" => "Rwanda",
+            "Saint-Christophe-et-Niévès" => "Saint Kitts and Nevis",
+            "Saint-Marin" => "San Marino",
+            "Saint-Vincent-et-les-Grenadines" => "Saint Vincent and the Grenadines",
+            "Sainte-Lucie" => "Saint Lucia",
+            "Salomon (Îles)" => "Solomon Islands",
+            "Salvador" => "El Salvador",
+            "Samoa" => "Samoa",
+            "São Tomé-et-Príncipe" => "São Tomé and Príncipe",
+            "Sénégal" => "Senegal",
+            "Serbie" => "Serbia",
+            "Seychelles" => "Seychelles",
+            "Sierra Leone" => "Sierra Leone",
+            "Singapour" => "Singapore",
+            "Slovaquie" => "Slovakia",
+            "Slovénie" => "Slovenia",
+            "Somalie" => "Somalia",
+            "Soudan" => "Sudan",
+            "Soudan du Sud" => "South Sudan",
+            "Sri Lanka" => "Sri Lanka",
+            "Suède" => "Sweden",
+            "Suisse" => "Switzerland",
+            "Suriname" => "Suriname",
+            "Syrie" => "Syria",
+            "Tadjikistan" => "Tajikistan",
+            "Tanzanie" => "Tanzania",
+            "Tchad" => "Chad",
+            "Thaïlande" => "Thailand",
+            "Timor-Leste" => "Timor-Leste",
+            "Togo" => "Togo",
+            "Tonga" => "Tonga",
+            "Trinité-et-Tobago" => "Trinidad and Tobago",
+            "Tunisie" => "Tunisia",
+            "Turkménistan" => "Turkmenistan",
+            "Turquie" => "Turkey",
+            "Tuvalu" => "Tuvalu",
+            "Ukraine" => "Ukraine",
+            "Uruguay" => "Uruguay",
+            "Vanuatu" => "Vanuatu",
+            "Vatican" => "Vatican City",
+            "Venezuela" => "Venezuela",
+            "Viêt Nam" => "Vietnam",
+            "Yémen" => "Yemen",
+            "Zambie" => "Zambia",
+            "Zimbabwe" => "Zimbabwe"
+        ];
+    }
 
 
     public function showAddShippingModal()
@@ -70,7 +277,7 @@ class CheckoutComponent extends Component
         $this->name = $shippingAdress->name;
         $this->phone = $shippingAdress->phone;
         $this->email = $shippingAdress->email;
-        $this->city = $shippingAdress->city;
+        $this->newCity = $shippingAdress->city;
         $this->adress = $shippingAdress->adress;
     }
 
@@ -262,6 +469,7 @@ class CheckoutComponent extends Component
             session()->forget('checkout');
 
             OrderConfirmedJob::dispatch($order);
+            //Mail::to($order->email)->send(new OrderConfirmedMail($order));
 
         }else{
 
@@ -308,7 +516,6 @@ class CheckoutComponent extends Component
             } else {
                 $this->calculateDiscount();
             }
-
         }
 
         $this->verifyCheckout();

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $locale = session('locale', config('app.locale'));
+    @endphp
     <main class="main">
         <section class="pt-20 pb-20">
             <div class="container">
@@ -22,7 +25,7 @@
                                             <!-- Password Reset Token -->
                                             <input type="hidden" name="token" value="{{ $request->route('token') }}">
                                             <div class="form-group">
-                                                <input type="text" required="" name="email" placeholder="Votre Adresse Mail" value="{{ old('email', $request->email) }}" required autofocus>
+                                                <input type="text" required="" name="email" placeholder="{{ Lang::get('messages.email', [], $locale) }}" value="{{ old('email', $request->email) }}" required autofocus>
                                                 <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                             </div>
                                             <style>
@@ -39,19 +42,20 @@
                                                 }
                                             </style>
                                             <div class="form-group position-relative">
-                                                <input required="" type="password" name="password" id="password" placeholder="Mot de passe" class="pr-4">
+                                                <input required="" type="password" name="password" id="password" placeholder="{{ Lang::get('messages.password', [], $locale) }}" class="pr-4">
                                                 <span class="password-toggle-icon" onclick="togglePasswordVisibility()">
                                                     <i class="fi-rs-eye"></i>
                                                 </span>
                                                 <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="form-group">
-                                                <input required="" type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirmer le Mot de passe" class="pr-4">
-
+                                                <input required="" type="password" name="password_confirmation" id="password_confirmation" placeholder="{{ Lang::get('messages.confirm_password', [], $locale) }}" class="pr-4">
                                                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-fill-out btn-block hover-up w-100" name="login">Restaurer le mot de passe</button>
+                                                <button type="submit" class="btn btn-fill-out btn-block hover-up w-100" name="login">
+                                                    {{ Lang::get('messages.reset_password', [], $locale) }}
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
